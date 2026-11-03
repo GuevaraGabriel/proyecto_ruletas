@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Archivos temporales de Quarto
+.quarto/
+*_cache/
+*_files/
