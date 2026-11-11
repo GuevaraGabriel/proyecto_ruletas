@@ -1,0 +1,5 @@
+"ruleta","estrategia","personas","giros","monto","varianza_sesion","perdida_media_sesion","rendimiento","probabilidad_giro_estimada","probabilidad_giro_teorica","casos_favorables","casillas","ganadores_sesion","probabilidad_ganancia_sesion","rendimiento_teorico"
+"Americana","Numero",1000,100,50,8116462.7027027,262.4,-5.248,2.632,2.63157894736842,1,38,488,48.8,-5.26315789473684
+"Americana","Docena",1000,100,50,482544.121621622,285.65,-5.713,31.429,31.5789473684211,12,38,315,31.5,-5.26315789473684
+"Americana","Color",1000,100,50,253045.435435435,268.1,-5.362,47.319,47.3684210526316,18,38,254,25.4,-5.26315789473684
+"Americana","Combinada",1000,100,50,137763.888288288,262.34,-5.2468,68.417,68.4210526315789,26,38,248,24.8,-5.26315789473684
