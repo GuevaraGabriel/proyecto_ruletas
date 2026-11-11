@@ -1,0 +1,7 @@
+"ruleta","monto","ganancia_promedio","probabilidad_ganar","desviacion_ganancias","rendimiento_promedio"
+"Europea",10,-26.68,35.6,74.6672136402102,-2.668
+"Europea",50,-133.4,35.6,373.336068201051,-2.668
+"Europea",100,-266.8,35.6,746.672136402102,-2.668
+"Americana",10,-51.736,24.2,72.2652930290646,-5.1736
+"Americana",50,-258.68,24.2,361.326465145323,-5.1736
+"Americana",100,-517.36,24.2,722.652930290646,-5.1736

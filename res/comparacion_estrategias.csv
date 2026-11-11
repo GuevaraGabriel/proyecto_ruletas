@@ -1,0 +1,9 @@
+"ruleta","estrategia","ganancia_promedio","probabilidad_ganar","desviacion_ganancias","rendimiento_promedio"
+"Europea","Numero",-123.8,49.7,3090.16871751409,-2.476
+"Europea","Docena",-166.7,39.6,695.945723781999,-3.334
+"Europea","Color",-128.6,36.7,504.516180688565,-2.572
+"Europea","Combinada",-133.4,35.6,373.336068201051,-2.668
+"Americana","Numero",-262.4,48.7,3009.48554461444,-5.248
+"Americana","Docena",-288.5,30.8,693.760804639506,-5.77
+"Americana","Color",-251.5,28.4,492.930756527457,-5.03
+"Americana","Combinada",-258.68,24.2,361.326465145323,-5.1736
