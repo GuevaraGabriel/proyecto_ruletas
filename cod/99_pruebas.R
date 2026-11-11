@@ -208,69 +208,37 @@ comparacion_eleccion <- data.frame(
 print(comparacion_eleccion)
 
 # 13. Repetir la comparacion de elecciones
-
 # Configurar el experimento
 n_repeticiones <- 10
-n_sesiones <- 10000
+n_sesiones <- 1000
 n_giros <- 100
 monto <- 50
-
 # Crear tabla de resultados
 resultados_repeticiones <- data.frame()
-
 # Establecer semilla una sola vez
 set.seed(2026)
-
 # Repetir el experimento completo
 for (r in seq_len(n_repeticiones)) {
-  
   ganancias_fijo <- numeric(n_sesiones)
   ganancias_aleatorio <- numeric(n_sesiones)
-  
   # Simular las sesiones de cada repeticion
   for (i in seq_len(n_sesiones)) {
-    
     resultados <- simular_giros(ruleta_europea, n_giros)
-    
-    numeros_elegidos <- sample(
-      ruleta_europea$numero, n_giros, replace = TRUE
-    )
-    
-    ganancias_fijo[i] <- sum(
-      apostar_numero(resultados, monto, 17)
-    )
-    
-    ganancias_aleatorio[i] <- sum(
-      apostar_numero(resultados, monto, numeros_elegidos)
-    )
+    numeros_elegidos <- sample(ruleta_europea$numero, n_giros, replace = TRUE)
+    ganancias_fijo[i] <- sum(apostar_numero(resultados, monto, 17))
+    ganancias_aleatorio[i] <- sum(apostar_numero(resultados, monto, numeros_elegidos))
   }
-  
   # Calcular las estadisticas de cada repeticion
   resumen <- data.frame(
     repeticion = r,
     modalidad = c("Fijo", "Aleatorio"),
-    ganancia_promedio = c(
-      mean(ganancias_fijo),
-      mean(ganancias_aleatorio)
-    ),
-    probabilidad_ganar = c(
-      mean(ganancias_fijo > 0),
-      mean(ganancias_aleatorio > 0)
-    ) * 100,
-    desviacion = c(
-      sd(ganancias_fijo),
-      sd(ganancias_aleatorio)
-    ),
-    rendimiento = c(
-      mean(ganancias_fijo),
-      mean(ganancias_aleatorio)
-    ) / (n_giros * monto) * 100
+    ganancia_promedio = c(mean(ganancias_fijo), mean(ganancias_aleatorio)),
+    probabilidad_ganar = c(mean(ganancias_fijo > 0), mean(ganancias_aleatorio > 0)) * 100,
+    desviacion = c(sd(ganancias_fijo), sd(ganancias_aleatorio)),
+    rendimiento = c(mean(ganancias_fijo), mean(ganancias_aleatorio)) / (n_giros * monto) * 100
   )
-  
   # Guardar los resultados
-  resultados_repeticiones <- rbind(
-    resultados_repeticiones, resumen
-  )
+  resultados_repeticiones <- rbind(resultados_repeticiones, resumen)
 }
 
 # Mostrar los resultados de las 10 repeticiones

@@ -1,4 +1,5 @@
 # Simulación de estrategias de ruleta y códigos finales
+# BORRADOR, CAMBIO EN EL OBJETIVO DE ANALISIS
 
 # 1. Cargar las funciones del proyecto
 source("cod/03_simulaciones.R")
@@ -113,9 +114,54 @@ write.csv(comparacion_giros, "res/comparacion_giros.csv", row.names = FALSE)
 
 print(comparacion_giros)
 
+# ==============================================================================
 
+# 7. Efecto del monto apostado
 
+# Crear tabla para guardar los resultados
+comparacion_montos <- data.frame()
 
+# Recorrer ambas ruletas
+for (tipo_ruleta in names(ruletas)) {
+  # Recorrer los montos apostados
+  for (monto_actual in montos) {
+    # Mantener los mismos giros para cada monto
+    set.seed(2026)
+    
+    # Simular las sesiones
+    sesiones <- simular_multiples_sesiones(ruletas[[tipo_ruleta]],
+                                           n_sesiones,
+                                           100,
+                                           monto_actual,
+                                           "Combinada",
+                                           "Negro")
+    
+    # Calcular los indicadores
+    resumen <- analizar_sesiones(sesiones)
+    
+    # Identificar el escenario
+    resumen$ruleta <- tipo_ruleta
+    resumen$monto <- monto_actual
+    
+    # Guardar los resultados
+    comparacion_montos <- rbind(comparacion_montos, resumen)
+  }
+}
+
+# Organizar las columnas
+comparacion_montos <- comparacion_montos[, c(
+  "ruleta",
+  "monto",
+  "ganancia_promedio",
+  "probabilidad_ganar",
+  "desviacion_ganancias",
+  "rendimiento_promedio"
+)]
+
+# 8. Exportar resultados
+write.csv(comparacion_montos, "res/comparacion_montos.csv", row.names = FALSE)
+
+print(comparacion_montos)
 
 
 
