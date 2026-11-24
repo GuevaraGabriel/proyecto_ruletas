@@ -7,3 +7,6 @@
 .quarto/
 *_cache/
 *_files/ 
+
+# Vistas previas de documentos
+VistaPrevia/
