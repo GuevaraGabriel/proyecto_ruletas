@@ -1,0 +1,238 @@
+---
+title: "Análisis estadístico y simulación de estrategias de apuestas en la ruleta europea y americana"
+author: "Gabriel Guevara Cornejo"
+lang: es
+
+format:
+  pdf:
+    documentclass: article
+    fontsize: 12pt
+    papersize: letter
+    linestretch: 1
+    geometry: margin=1.8cm
+    toc: false
+    number-sections: true
+    colorlinks: true
+    fig-pos: H
+    include-in-header:
+      text: |
+        \usepackage{titlesec}
+        \usepackage{titling}
+        \usepackage{caption}
+
+        \setlength{\droptitle}{-2em}
+        \pretitle{\begin{center}\large\bfseries}
+        \posttitle{\par\end{center}}
+        \preauthor{\begin{center}\normalsize}
+        \postauthor{\par\end{center}}
+        \predate{}
+        \postdate{}
+
+        \titlespacing*{\section}{0pt}{10pt}{4pt}
+        \titlespacing*{\subsection}{0pt}{7pt}{3pt}
+
+        \captionsetup{skip=4pt}
+
+        \AtBeginDocument{
+          \setlength{\parskip}{4pt}
+          \setlength{\abovedisplayskip}{5pt}
+          \setlength{\belowdisplayskip}{5pt}
+          \setlength{\abovedisplayshortskip}{3pt}
+          \setlength{\belowdisplayshortskip}{3pt}
+          \setlength{\textfloatsep}{8pt}
+          \setlength{\intextsep}{6pt}
+        }
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+bibliography: info/referencias.bib
+csl: info/apa.csl
+
+editor: visual
+---
+
+
+# Introducción
+
+El casino es un mundo regido por la matemática y los juegos de azar. Debido a la incertidumbre que caracteriza este ambiente, resulta interesante estudiarlo desde la perspectiva de la probabilidad y la estadística.
+
+En particular, las ruletas europea y americana presentan diferencias en sus reglas que afectan las probabilidades de éxito y el rendimiento esperado de las apuestas. Mediante simulaciones computacionales en R, se busca analizar y comparar el comportamiento de cuatro estrategias de apuestas en ambas ruletas.
+
+# Objetivo general
+
+Comparar estadísticamente cuatro estrategias de apuestas en las ruletas europea y americana mediante simulaciones computacionales en R, considerando su rendimiento, variabilidad, convergencia hacia el rendimiento teórico y probabilidad de obtener ganancias conforme aumenta la cantidad de giros.
+
+# Datos utilizados
+
+Se construyeron dos bases de datos en R a partir de las reglas de las ruletas europea y americana, con 37 y 38 registros, respectivamente. Cada registro representa una casilla y contiene cuatro variables: número, color, docena y columna.
+
+La ruleta europea cuenta con 37 casillas y la americana con 38, debido a la incorporación del doble cero (00) [@boe2011; @nyroulette].
+
+A partir de estas bases se generaron los resultados de los giros mediante simulaciones computacionales, sin utilizar registros históricos de casinos reales.
+
+# Metodología
+
+## Estrategias de apuestas
+
+Se seleccionaron cuatro estrategias con diferentes probabilidades de éxito y pagos netos.
+
+| Estrategia | Descripción | Pago neto |
+|---|---|---:|
+| Número | Número 17 | 35:1 |
+| Docena | Primera docena (1-12) | 2:1 |
+| Color | Color negro | 1:1 |
+| Combinada | 60 % al negro y 40 % a la tercera columna | Variable |
+
+: Estrategias de apuestas simuladas.
+
+## Supuestos de simulación
+
+Se supone que los giros son independientes y las casillas equiprobables. Cada persona mantiene la misma estrategia y monto apostado durante la sesión, sin restricciones de capital ni límites de apuestas. Todos los resultados se expresan en ganancias o pérdidas netas.
+
+## Indicadores estadísticos
+
+Sea $N$ la cantidad de personas, $n$ la cantidad de giros, $m$ el monto apostado por giro y $G_i$ la ganancia neta acumulada de la persona $i$, cuya media es $\overline{G}$.
+
+**Pérdida media y varianza muestral:**
+
+$$
+\overline{L}=-\frac{1}{N}\sum_{i=1}^{N}G_i
+\qquad
+s^2=\frac{\sum_{i=1}^{N}(G_i-\overline{G})^2}{N-1}
+$$
+
+**Rendimiento porcentual observado y teórico:**
+
+$$
+R=\frac{\overline{G}}{nm}\times100
+\qquad
+R_T=100\sum_{j=1}^{k}p_jx_j
+$$
+
+Donde $k$ representa las casillas posibles, $p_j$ su probabilidad y $x_j$ su ganancia neta por unidad apostada.
+
+**Probabilidades de ganancia por giro y sesión:**
+
+$$
+P_g=\frac{\text{Casillas favorables}}{\text{Casillas totales}}
+\qquad
+\widehat{P}_s=\frac{\text{Personas con }G_i>0}{N}
+$$
+
+La probabilidad empírica de ganancia por giro se estima dividiendo la cantidad de giros con ganancias positivas entre el total de giros simulados.
+
+## Diseño experimental
+
+Se realizaron tres experimentos mediante simulaciones de Monte Carlo en R, utilizando una semilla fija para garantizar la reproducibilidad y un monto de 50 unidades monetarias por giro.
+
+| Experimento | Personas | Giros por persona |
+|---|---:|---:|
+| Comparación de estrategias | 1.000 | 100 |
+| Convergencia del rendimiento | Hasta 100.000 | 100 |
+| Probabilidad de ganancia | 1.000 | 20-50.000 |
+
+: Parámetros de los tres experimentos.
+
+Para generar los resultados aleatorios se utilizaron las
+funciones `sample.int()` y `rmultinom()`, empleando
+`set.seed()` para garantizar la reproducibilidad
+[@rsample; @rmultinom; @rrandom].
+
+\newpage
+
+# Resultados
+
+## Comparación de estrategias
+
+```{r}
+#| label: tbl-comparacion
+#| tbl-cap: "Comparación estadística de las estrategias de apuestas."
+
+europea <- read.csv("res/06_comparacion_ruletas/tabla_europea.csv")
+americana <- read.csv("res/06_comparacion_ruletas/tabla_americana.csv")
+
+resultados <- rbind(europea, americana)
+
+tabla <- resultados[, c(
+  "ruleta",
+  "estrategia",
+  "varianza_sesion",
+  "perdida_media_sesion",
+  "rendimiento",
+  "probabilidad_giro_estimada",
+  "probabilidad_giro_teorica",
+  "probabilidad_ganancia_sesion"
+)]
+
+tabla$estrategia[tabla$estrategia == "Numero"] <- "Número"
+
+tabla$varianza_sesion <- round(tabla$varianza_sesion, 0)
+tabla[, 4:8] <- round(tabla[, 4:8], 2)
+
+knitr::kable(
+  tabla,
+  format = "pipe",
+  col.names = c(
+    "Ruleta", "Apuesta", "Varianza", "Pérdida",
+    "Rend.", "Giro obs.", "Giro teór.", "Sesión"
+  )
+)
+```
+
+*Nota:* El rendimiento y las probabilidades se expresan
+en porcentajes; la pérdida media, en unidades monetarias
+y la varianza, en unidades monetarias al cuadrado.
+
+*Fuente:* Elaboración propia mediante simulaciones en R.
+
+Según la @tbl-comparacion, la ruleta americana presenta mayores pérdidas medias en las cuatro estrategias. La apuesta a un número
+registra la mayor varianza, mientras que la combinada
+presenta la menor. Esta última obtiene la mayor
+probabilidad de ganar por giro, pero la menor
+probabilidad de finalizar una sesión con ganancias.
+
+## Convergencia del rendimiento
+
+![Convergencia del rendimiento observado hacia el teórico. Fuente: elaboración propia.](res/07_rendimiento_teorico/convergencia_reporte.pdf){#fig-convergencia width=85% fig-align="center"}
+
+La @fig-convergencia muestra cómo el rendimiento de las
+cuatro estrategias se aproxima a su valor teórico:
+−2,70 % en la ruleta europea y −5,26 % en la americana.
+La apuesta a un número presenta mayores fluctuaciones,
+pasando de un rendimiento positivo del 0,30 % con
+1.000 personas a uno negativo del −2,74 % con 100.000.
+Este comportamiento es consistente con la ley de los
+grandes números.
+
+## Probabilidad de ganancia
+
+![Probabilidad de terminar una sesión con ganancia neta positiva. Fuente: elaboración propia.](res/08_prob_ganancia/probabilidad_reporte.pdf){#fig-probabilidad width=85% fig-align="center"}
+
+Según la @fig-probabilidad, la probabilidad de finalizar
+con ganancias tiende a disminuir conforme aumentan
+los giros. La apuesta a un número, debido a su elevada
+variabilidad, mantiene probabilidades observadas del
+13,5 % en la ruleta europea y del 1,9 % en la americana
+después de 50.000 giros. Las demás estrategias registran
+un 0 % observado, lo cual no implica que ganar sea
+matemáticamente imposible.
+
+# Conclusiones
+
+- Las cuatro estrategias presentan diferencias en su variabilidad y probabilidad de éxito. Sin embargo, una mayor probabilidad de ganar por giro no implica necesariamente una mayor probabilidad de finalizar una sesión con ganancias.
+
+- El rendimiento observado converge hacia un mismo valor teórico para las cuatro estrategias dentro de cada ruleta: −2,70 % en la europea y −5,26 % en la americana. Por lo tanto, ninguna de las estrategias estudiadas proporciona una ventaja matemática al jugador.
+
+- Conforme aumenta la cantidad de giros, la probabilidad de finalizar una sesión con ganancias tiende a disminuir. Aunque la elevada variabilidad de ciertas estrategias permite obtener ganancias en sesiones prolongadas, su rendimiento esperado continúa siendo negativo.
+
+Estos resultados deben interpretarse considerando los supuestos del modelo, particularmente la independencia de los giros, la equiprobabilidad de las casillas y la ausencia de restricciones de capital. Por ello, las simulaciones representan condiciones idealizadas de juego.
+
+\newpage
+
+# Referencias {.unnumbered}
+
+::: {#refs}
+:::
