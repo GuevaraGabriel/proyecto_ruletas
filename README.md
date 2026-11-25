@@ -10,10 +10,10 @@ Su objetivo es estudiar el rendimiento, la variabilidad de las ganancias y pérd
 
 Se analizan cuatro estrategias:
 
-1. **Número:** apuesta al número 17.
-2. **Docena:** apuesta a la primera docena (1–12).
-3. **Color:** apuesta al negro.
-4. **Combinada:** distribución del 60 % del monto al negro y 40 % a la tercera columna.
+1.  **Número:** apuesta al número 17.
+2.  **Docena:** apuesta a la primera docena (1–12).
+3.  **Color:** apuesta al negro.
+4.  **Combinada:** distribución del 60 % del monto al negro y 40 % a la tercera columna.
 
 ## 2. Objetivos del análisis
 
@@ -26,7 +26,7 @@ El proyecto desarrolla tres experimentos principales:
 ## 3. Estructura del proyecto
 
 | Carpeta | Contenido |
-|---|---|
+|------------------------------------|------------------------------------|
 | `cod/` | Scripts de R para crear datos, definir estrategias y realizar simulaciones. |
 | `data/` | Bases de datos CSV de las ruletas europea y americana. |
 | `info/` | Documentación de las reglas, estrategias, metodología y referencias bibliográficas. |
@@ -53,7 +53,7 @@ Los datos son simulados y no corresponden a registros históricos de casinos.
 ## 5. Scripts principales
 
 | Script | Función |
-|---|---|
+|------------------------------------|------------------------------------|
 | `01_crear_datos_ruletas.R` | Construye las bases de datos de ambas ruletas. |
 | `02_reglas_apuestas.R` | Define las reglas de pago de las cuatro estrategias. |
 | `03_simulaciones.R` | Contiene funciones generales para simular y analizar sesiones. |
@@ -68,12 +68,12 @@ Los scripts se encuentran dentro de `cod/`.
 
 Para reproducir los experimentos finales:
 
-1. Abrir el proyecto en RStudio.
-2. Verificar que estén instalados los paquetes necesarios.
-3. Ejecutar `cod/01_crear_datos_ruletas.R` si es necesario generar nuevamente los CSV.
-4. Ejecutar `cod/06_comparacion_ruletas.R`.
-5. Ejecutar `cod/07_rendimiento_teorico.R`.
-6. Ejecutar `cod/08_prob_ganancia.R`.
+1.  Abrir el proyecto en RStudio.
+2.  Verificar que estén instalados los paquetes necesarios.
+3.  Ejecutar `cod/01_crear_datos_ruletas.R` si es necesario generar nuevamente los CSV.
+4.  Ejecutar `cod/06_comparacion_ruletas.R`.
+5.  Ejecutar `cod/07_rendimiento_teorico.R`.
+6.  Ejecutar `cod/08_prob_ganancia.R`.
 
 Los scripts deben ejecutarse desde la carpeta raíz del proyecto.
 
@@ -116,3 +116,21 @@ Las simulaciones suponen giros independientes, casillas equiprobables y apuestas
 No se consideran límites de capital, restricciones de mesa ni estrategias que modifiquen las apuestas según los resultados anteriores.
 
 Los resultados deben interpretarse como estimaciones estadísticas bajo las condiciones establecidas en el modelo.
+
+## Informe final
+
+El informe académico del proyecto fue elaborado mediante Quarto y presenta la metodología, los resultados y las conclusiones de los tres experimentos realizados.
+
+Los archivos correspondientes son:
+
+- `informe_final.qmd`: documento fuente del informe.
+
+- `informe_final.pdf`: versión final del informe académico.
+
+- `info/referencias.bib`: fuentes bibliográficas utilizadas.
+
+- `info/apa.csl`: archivo de estilo bibliográfico APA 7.
+
+El documento utiliza las tablas, los datos y los gráficos generados previamente por los scripts de R y almacenados en la carpeta `res/`.
+
+Para reproducir el informe, se debe abrir el archivo `informe_final.qmd` en RStudio y seleccionar la opción Render, teniendo instalados Quarto, LaTeX y los paquetes de R necesarios.

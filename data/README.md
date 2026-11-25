@@ -1,11 +1,11 @@
-# Datos del proyecto
+# Carpeta Datos
 
 Esta carpeta contiene las bases de datos utilizadas para representar las ruletas europea y americana en las simulaciones de Monte Carlo.
 
 ## 1. Archivos disponibles
 
 | Archivo | Descripción |
-|---|---|
+|------------------------------------|------------------------------------|
 | `ruleta_europea.csv` | Contiene las 37 casillas de la ruleta europea, numeradas del 0 al 36. |
 | `ruleta_americana.csv` | Contiene las 38 casillas de la ruleta americana, representadas mediante los números del 0 al 37. |
 
@@ -16,7 +16,7 @@ En la ruleta americana, el valor **37 representa el doble cero (00)**. Esta codi
 Ambas bases de datos contienen cuatro columnas:
 
 | Variable | Tipo | Descripción |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | `numero` | Entero | Identificador numérico de cada casilla. |
 | `color` | Carácter | Color de la casilla: Rojo, Negro o Verde. |
 | `docena` | Entero | Docena a la que pertenece el número: 1, 2 o 3. |

@@ -1,4 +1,4 @@
-# Configuración del proyecto
+# Carpeta Config
 
 Esta carpeta está destinada a documentar la configuración general utilizada en las simulaciones de Monte Carlo.
 
@@ -13,7 +13,7 @@ Este script contiene los parámetros utilizados por los tres experimentos princi
 ## 2. Parámetros generales
 
 | Parámetro | Valor | Descripción |
-|---|---:|---|
+|----------------------|----------------------------:|----------------------|
 | `n_personas` | 1.000 | Cantidad de personas simuladas en el escenario base. |
 | `n_giros` | 100 | Cantidad de giros por persona en el escenario base. |
 | `monto` | 50 | Unidades monetarias apostadas por giro. |
@@ -46,9 +46,9 @@ Para cambiar las condiciones de los experimentos se deben modificar los valores 
 
 Después es necesario ejecutar nuevamente los scripts:
 
-1. `06_comparacion_ruletas.R`
-2. `07_rendimiento_teorico.R`
-3. `08_prob_ganancia.R`
+1.  `06_comparacion_ruletas.R`
+2.  `07_rendimiento_teorico.R`
+3.  `08_prob_ganancia.R`
 
 El script 06 genera los resultados base que reutilizan los scripts 07 y 08.
 

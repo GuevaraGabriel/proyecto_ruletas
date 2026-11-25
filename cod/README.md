@@ -7,7 +7,7 @@ Los archivos se organizan mediante una numeración que permite identificar su fu
 ## 1. Scripts del proyecto
 
 | Archivo | Descripción |
-|---|---|
+|------------------------------------|------------------------------------|
 | `00_configuracion.R` | Define los parámetros generales, las estrategias y los colores utilizados en los gráficos. |
 | `01_crear_datos_ruletas.R` | Construye las bases de datos de las ruletas europea y americana. |
 | `02_reglas_apuestas.R` | Define las funciones que calculan las ganancias y pérdidas de las cuatro estrategias. |
@@ -48,10 +48,10 @@ Se calcula la proporción de personas que termina cada sesión con una ganancia 
 
 Para reproducir los análisis finales desde la carpeta raíz del proyecto:
 
-1. Ejecutar `01_crear_datos_ruletas.R` si es necesario generar nuevamente las bases de datos.
-2. Ejecutar `06_comparacion_ruletas.R`.
-3. Ejecutar `07_rendimiento_teorico.R`.
-4. Ejecutar `08_prob_ganancia.R`.
+1.  Ejecutar `01_crear_datos_ruletas.R` si es necesario generar nuevamente las bases de datos.
+2.  Ejecutar `06_comparacion_ruletas.R`.
+3.  Ejecutar `07_rendimiento_teorico.R`.
+4.  Ejecutar `08_prob_ganancia.R`.
 
 Los scripts `06`, `07` y `08` utilizan los parámetros definidos en `00_configuracion.R`.
 
@@ -85,3 +85,5 @@ Las reglas de las ruletas, las estrategias, los supuestos metodológicos y las f
 Los parámetros generales se explican también en `config/README.md`.
 
 El informe académico se elaborará mediante Quarto utilizando los resultados de los tres experimentos finales.
+
+El informe académico fue elaborado mediante Quarto y se encuentra en la carpeta raíz del proyecto, bajo el nombre `informe_final.qmd`. Este documento utiliza los resultados, las tablas y los gráficos generados por los scripts de R, sin necesidad de ejecutar nuevamente las simulaciones durante su renderización.
