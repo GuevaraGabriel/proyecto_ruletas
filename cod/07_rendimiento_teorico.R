@@ -171,3 +171,79 @@ for (tipo in names(proyecto$base)) {
     )
   }
 }
+
+# =============================================================================
+# gráfico de del reporte final
+
+grafico_reporte_07 <- ggplot(
+  datos,
+  aes(x = personas, y = rendimiento, color = estrategia)
+) +
+  geom_vline(
+    xintercept = p$n_personas,
+    color = "gray60",
+    linetype = "dotted",
+    linewidth = 0.6
+  ) +
+  geom_line(linewidth = 0.9) +
+  geom_hline(
+    aes(yintercept = teorico, linetype = "Rendimiento teórico"),
+    color = "black",
+    linewidth = 0.6,
+    show.legend = TRUE
+  ) +
+  facet_wrap(~ruleta, ncol = 2) +
+  scale_color_manual(
+    values = proyecto$colores,
+    breaks = estrategias,
+    labels = proyecto$etiquetas,
+    name = "Estrategia"
+  ) +
+  scale_linetype_manual(
+    values = c("Rendimiento teórico" = "dashed"),
+    name = NULL
+  ) +
+  scale_x_log10(labels = numero) +
+  scale_y_continuous(labels = porcentaje) +
+  labs(
+    title = "Convergencia del rendimiento observado hacia el rendimiento teórico",
+    subtitle = paste0(
+      p$n_giros, " giros por persona y ",
+      numero(p$monto), " u. m. apostadas por giro"
+    ),
+    x = "Cantidad de personas simuladas (escala logarítmica)",
+    y = "Rendimiento (%)",
+    caption = paste0(
+      "Línea vertical: escenario base de ",
+      numero(p$n_personas),
+      " personas."
+    )
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.minor = element_blank(),
+    strip.text = element_text(face = "bold"),
+    plot.title = element_text(face = "bold"),
+    plot.caption = element_text(hjust = 0)
+  )
+
+print(grafico_reporte_07)
+
+ggsave(
+  file.path(salida, "convergencia_reporte.png"),
+  plot = grafico_reporte_07,
+  width = 10,
+  height = 5.8,
+  dpi = 300,
+  bg = "white"
+)
+
+ggsave(
+  file.path(salida, "convergencia_reporte.pdf"),
+  plot = grafico_reporte_07,
+  width = 10,
+  height = 5.8,
+  bg = "white"
+)
+

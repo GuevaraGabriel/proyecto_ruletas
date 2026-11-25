@@ -206,3 +206,76 @@ for (tipo in names(proyecto$base)) {
     )
   }
 }
+
+# =============================================================================
+# gráfico de del reporte final
+
+grafico_reporte_08 <- ggplot(
+  datos,
+  aes(x = giros, y = probabilidad_ganancia, color = estrategia)
+) +
+  geom_vline(
+    xintercept = p$n_giros,
+    color = "gray60",
+    linetype = "dotted",
+    linewidth = 0.6
+  ) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  facet_wrap(~ruleta, ncol = 2) +
+  scale_color_manual(
+    values = proyecto$colores,
+    breaks = estrategias,
+    labels = proyecto$etiquetas,
+    name = "Estrategia"
+  ) +
+  scale_x_log10(labels = numero) +
+  scale_y_continuous(
+    limits = c(0, limite_y),
+    breaks = seq(0, limite_y, 10),
+    labels = porcentaje
+  ) +
+  labs(
+    title = "Probabilidad de terminar una sesión con ganancia neta positiva",
+    subtitle = paste0(
+      numero(p$n_personas),
+      " personas por estrategia; ",
+      numero(p$monto),
+      " u. m. por giro"
+    ),
+    x = "Cantidad de giros por persona (escala logarítmica)",
+    y = "Probabilidad de ganancia (%)",
+    caption = "La línea vertical indica la cantidad de giros del escenario base."
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.minor = element_blank(),
+    strip.text = element_text(face = "bold"),
+    plot.title = element_text(face = "bold"),
+    plot.caption = element_text(hjust = 0)
+  )
+
+print(grafico_reporte_08)
+
+ggsave(
+  file.path(salida, "probabilidad_reporte.png"),
+  plot = grafico_reporte_08,
+  width = 10,
+  height = 5.8,
+  dpi = 300,
+  bg = "white"
+)
+
+ggsave(
+  file.path(salida, "probabilidad_reporte.pdf"),
+  plot = grafico_reporte_08,
+  width = 10,
+  height = 5.8,
+  bg = "white"
+)
+
+
+
+
+
