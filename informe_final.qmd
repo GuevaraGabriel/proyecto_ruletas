@@ -76,7 +76,7 @@ Se seleccionaron cuatro estrategias con diferentes probabilidades de éxito y pa
 
 ::: {#tbl-estrategias}
 | Estrategia | Descripción                               | Pago neto al acertar |
-|------------|-------------------------------------------|---------------------:|
+|----------------|-------------------------------------|------------------:|
 | Número     | Número 17                                 |                 35:1 |
 | Docena     | Primera docena (1-12)                     |                  2:1 |
 | Color      | Color negro                               |                  1:1 |
@@ -214,6 +214,14 @@ Después de 50.000 giros, el 13,5 % de las personas de la europea y el 1,9 % de 
 
 ::: {#refs}
 :::
+
+## Repositorio del proyecto {.unnumbered}
+
+El código fuente, las bases de datos, los resultados y la
+documentación del proyecto se encuentran disponibles en
+el siguiente repositorio de GitHub:
+
+[Repositorio del proyecto]https://github.com/GuevaraGabriel/proyecto_ruletas
 
 \newpage
 
