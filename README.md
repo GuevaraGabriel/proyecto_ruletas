@@ -1,4 +1,4 @@
-# Simulación de estrategias de ruleta
+#  Simulación de estrategias de ruleta
 
 ## 1. Descripción
 
@@ -134,3 +134,25 @@ Los archivos correspondientes son:
 El documento utiliza las tablas, los datos y los gráficos generados previamente por los scripts de R y almacenados en la carpeta `res/`.
 
 Para reproducir el informe, se debe abrir el archivo `informe_final.qmd` en RStudio y seleccionar la opción Render, teniendo instalados Quarto, LaTeX y los paquetes de R necesarios.
+
+## Reproducción completa del proyecto
+
+Para ejecutar el proyecto se requiere tener instalados R, RStudio, Quarto y una distribución de LaTeX para generar el informe en PDF.
+
+Los paquetes de R necesarios pueden instalarse mediante:
+
+```         
+install.packages(c("dplyr", "tidyr", "ggplot2",                    "gridExtra", "scales", "knitr"))
+```
+
+Para reproducir los resultados, se debe abrir el proyecto en RStudio y ejecutar desde la consola:
+
+```         
+source("cod/09_ejecutar_proyecto.R")
+```
+
+Este script genera las bases de datos y ejecuta automáticamente los tres experimentos finales, produciendo las tablas y los gráficos correspondientes.
+
+Una vez finalizada la ejecución, se debe abrir `informe_final.qmd` y seleccionar Render para generar el informe académico.
+
+El informe incluye cuatro anexos matemáticos que respaldan los resultados simulados mediante cálculos teóricos de rendimiento, probabilidades y varianza.

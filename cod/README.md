@@ -44,20 +44,28 @@ Se estudian sesiones de diferentes duraciones, desde 20 hasta 50.000 giros por p
 
 Se calcula la proporción de personas que termina cada sesión con una ganancia neta positiva.
 
-## 3. Orden de ejecución
 
-Para reproducir los análisis finales desde la carpeta raíz del proyecto:
+## Orden de ejecución
 
-1.  Ejecutar `01_crear_datos_ruletas.R` si es necesario generar nuevamente las bases de datos.
-2.  Ejecutar `06_comparacion_ruletas.R`.
-3.  Ejecutar `07_rendimiento_teorico.R`.
-4.  Ejecutar `08_prob_ganancia.R`.
+Para reproducir los resultados finales del proyecto, se recomienda
+ejecutar desde la carpeta raíz:
 
-Los scripts `06`, `07` y `08` utilizan los parámetros definidos en `00_configuracion.R`.
+```r
+source("cod/09_ejecutar_proyecto.R")
+```
 
-El script `06` carga las reglas de apuestas desde `02_reglas_apuestas.R` y genera un archivo RDS que posteriormente utilizan los scripts `07` y `08`.
+Este script ejecuta automáticamente los siguientes archivos:
 
-El archivo `03_simulaciones.R` contiene funciones generales del desarrollo del proyecto, pero no necesita ejecutarse por separado para reproducir los tres análisis finales.
+1. `01_crear_datos_ruletas.R`
+2. `06_comparacion_ruletas.R`
+3. `07_rendimiento_teorico.R`
+4. `08_prob_ganancia.R`
+
+Los archivos de configuración y las funciones de apuestas son
+cargados automáticamente por los scripts correspondientes.
+
+Una vez generados los resultados, se puede renderizar
+`informe_final.qmd` desde RStudio.
 
 ## 4. Resultados generados
 
