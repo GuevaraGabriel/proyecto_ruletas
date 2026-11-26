@@ -119,7 +119,6 @@ No deben presentarse como estimaciones tomadas de una base de datos externa.
 |---|---|
 | `01_crear_datos_ruletas.R` | Reglas generales de la ruleta y elaboración propia |
 | `02_reglas_apuestas.R` | Regulación de apuestas y pagos; elaboración propia |
-| `03_simulaciones.R` | Metodología de Monte Carlo y elaboración propia |
 | `06_comparacion_ruletas.R` | Elaboración propia y documentación de R |
 | `07_rendimiento_teorico.R` | Elaboración propia y documentación de R |
 | `08_prob_ganancia.R` | Elaboración propia y documentación de R |

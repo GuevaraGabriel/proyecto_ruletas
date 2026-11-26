@@ -1,4 +1,4 @@
-#  Simulación de estrategias de ruleta
+# Simulación de estrategias de ruleta
 
 ## 1. Descripción
 
@@ -26,7 +26,7 @@ El proyecto desarrolla tres experimentos principales:
 ## 3. Estructura del proyecto
 
 | Carpeta | Contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `cod/` | Scripts de R para crear datos, definir estrategias y realizar simulaciones. |
 | `data/` | Bases de datos CSV de las ruletas europea y americana. |
 | `info/` | Documentación de las reglas, estrategias, metodología y referencias bibliográficas. |
@@ -53,10 +53,9 @@ Los datos son simulados y no corresponden a registros históricos de casinos.
 ## 5. Scripts principales
 
 | Script | Función |
-|------------------------------------|------------------------------------|
+|----|----|
 | `01_crear_datos_ruletas.R` | Construye las bases de datos de ambas ruletas. |
 | `02_reglas_apuestas.R` | Define las reglas de pago de las cuatro estrategias. |
-| `03_simulaciones.R` | Contiene funciones generales para simular y analizar sesiones. |
 | `00_configuracion.R` | Define los parámetros de los experimentos finales. |
 | `06_comparacion_ruletas.R` | Ejecuta la comparación de las cuatro estrategias. |
 | `07_rendimiento_teorico.R` | Estudia la convergencia del rendimiento. |

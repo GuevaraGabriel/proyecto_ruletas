@@ -10,3 +10,12 @@
 
 # Vistas previas de documentos
 VistaPrevia/
+
+# Scripts de versiones anteriores
+/cod/03_simulaciones.R
+/cod/04_experimentos.R
+/cod/05_graficos.R
+/cod/99_pruebas.R
+
+# Resultados de experimentos anteriores
+/res/ResultadosExtra/

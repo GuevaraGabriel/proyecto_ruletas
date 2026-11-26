@@ -56,7 +56,7 @@ editor: visual
 
 # Introducción
 
-El casino es un mundo regido por la matemática y los juegos de azar. Debido a la incertidumbre que caracteriza este ambiente, resulta interesante estudiarlo desde la perspectiva de la probabilidad y la estadística. La ruleta permite estudiar estas diferencias en un espacio controlado trabajando bajo ciertos supuestos y reglas. Las ruletas europea y americana presentan diferencias en sus reglas que afectan las probabilidades de éxito y el rendimiento esperado. Mediante simulaciones computacionales en R, se busca comparar cuatro estrategias en ambas ruletas.
+El casino es un mundo regido por la matemática y los juegos de azar. Debido a la incertidumbre que caracteriza este ambiente, resulta interesante estudiarlo desde la perspectiva de la probabilidad y la estadística. La ruleta permite estudiar estas diferencias en un espacio controlado trabajando bajo ciertos supuestos y reglas. Las ruletas europea y americana presentan diferencias en sus reglas que afectan las probabilidades de éxito y el rendimiento esperado [@boe2011; @nyroulette]. Mediante simulaciones computacionales en R, se busca comparar cuatro estrategias en ambas ruletas.
 
 # Objetivo general
 
@@ -76,7 +76,7 @@ Se seleccionaron cuatro estrategias con diferentes probabilidades de éxito y pa
 
 ::: {#tbl-estrategias}
 | Estrategia | Descripción                               | Pago neto al acertar |
-|------------------|-----------------------------------|------------------:|
+|------------|-------------------------------------------|---------------------:|
 | Número     | Número 17                                 |                 35:1 |
 | Docena     | Primera docena (1-12)                     |                  2:1 |
 | Color      | Color negro                               |                  1:1 |
@@ -188,8 +188,7 @@ La @fig-convergencia muestra cómo el rendimiento observado se aproxima al valor
 
 La apuesta a un número presenta mayores fluctuaciones debido a su elevada varianza. En la europea, su rendimiento pasa de 0,30 % con 1.000 personas a -2,74 % con 100.000. La diferencia indica que aunque tenga un rendimiento positivo al inicio, este termina acercándose al -2,70 % conforme aumenta la cantidad simulada. Al finalizar el experimento, las ocho estimaciones difieren de sus valores teóricos en menos de 0,09 puntos porcentuales.
 
-Este comportamiento es consistente con la ley de los grandes
-números [@blitzstein2019]. Al aumentar la cantidad de personas simuladas, los resultados individuales extremos tienen una menor influencia sobre el rendimiento promedio, permitiendo obtener una estimación más cercana al valor teórico.
+Este comportamiento es consistente con la ley de los grandes números [@blitzstein2019]. Al aumentar la cantidad de personas simuladas, los resultados individuales extremos tienen una menor influencia sobre el rendimiento promedio, permitiendo obtener una estimación más cercana al valor teórico.
 
 Para medir la precisión de esta estimación se utiliza el error estándar del rendimiento:
 
@@ -220,11 +219,7 @@ Después de 50.000 giros, el 13,5 % de las personas de la europea y el 1,9 % de 
 
 # Anexos {.unnumbered}
 
-Los desarrollos matemáticos de los siguientes anexos se
-fundamentan en los conceptos de valor esperado, varianza
-y distribuciones de probabilidad desarrollados por
-@blitzstein2019, aplicados a las reglas y condiciones
-establecidas en esta investigación.
+Los desarrollos matemáticos de los siguientes anexos se fundamentan en los conceptos de valor esperado, varianza y distribuciones de probabilidad desarrollados por @blitzstein2019, aplicados a las reglas y condiciones establecidas en esta investigación.
 
 ## Anexo A. Rendimiento teórico de las estrategias {.unnumbered}
 

@@ -12,7 +12,6 @@ Los resultados principales se organizan según los tres experimentos finales del
 | `06_comparacion_ruletas/` | Comparación de las estrategias mediante indicadores estadísticos. |
 | `07_rendimiento_teorico/` | Análisis de convergencia del rendimiento observado hacia el teórico. |
 | `08_prob_ganancia/` | Análisis de la probabilidad de terminar con ganancias según la cantidad de giros. |
-| `ResultadosExtra/` | Archivos conservados de experimentos realizados durante el desarrollo del proyecto. |
 
 ## 2. Experimento 1: comparación de estrategias
 
@@ -80,15 +79,8 @@ Se utilizan 1.000 personas y se evalúan sesiones de entre 20 y 50.000 giros por
 
 Los porcentajes obtenidos son estimaciones basadas en las sesiones simuladas y no deben interpretarse necesariamente como probabilidades matemáticas exactas.
 
-## 5. Resultados anteriores
 
-La carpeta `ResultadosExtra/` conserva archivos de experimentos realizados durante el desarrollo del proyecto que no forman parte de los tres análisis finales.
-
-Se mantienen como respaldo del proceso de trabajo y permiten documentar la evolución de la investigación.
-
-El informe académico utiliza los resultados de los experimentos 06, 07 y 08.
-
-## 6. Reproducción de resultados
+## 5. Reproducción de resultados
 
 Todos los resultados de los experimentos finales pueden regenerarse ejecutando el siguiente comando desde la carpeta raíz del proyecto:
 
@@ -111,7 +103,7 @@ Se utilizan semillas fijas para garantizar la reproducibilidad de las simulacion
 
 Una vez generados los resultados, se puede renderizar el archivo `informe_final.qmd` desde RStudio.
 
-## 7. Consideraciones sobre los resultados
+## 6. Consideraciones sobre los resultados
 
 - Los datos son simulados y no provienen de jugadores reales.
 - Las ganancias y pérdidas pueden variar entre ejecuciones con distintas semillas.
@@ -121,7 +113,7 @@ Una vez generados los resultados, se puede renderizar el archivo `informe_final.
 - Una probabilidad estimada del 0 % no implica necesariamente imposibilidad matemática.
 - Los resultados deben interpretarse considerando los supuestos y limitaciones documentados en `info/03_supuestos_y_metodologia.md`.
 
-## 8. Utilización en el informe
+## 7. Utilización en el informe
 
 Las tablas y los gráficos definitivos de esta carpeta se utilizan en el informe académico generado mediante Quarto (`informe_final.qmd`).
 

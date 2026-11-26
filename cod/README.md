@@ -11,7 +11,6 @@ Los archivos se organizan mediante una numeración que permite identificar su fu
 | `00_configuracion.R` | Define los parámetros generales, las estrategias y los colores utilizados en los gráficos. |
 | `01_crear_datos_ruletas.R` | Construye las bases de datos de las ruletas europea y americana. |
 | `02_reglas_apuestas.R` | Define las funciones que calculan las ganancias y pérdidas de las cuatro estrategias. |
-| `03_simulaciones.R` | Contiene funciones generales para simular giros, sesiones y múltiples sesiones. |
 | `06_comparacion_ruletas.R` | Compara las cuatro estrategias mediante indicadores estadísticos en ambas ruletas. |
 | `07_rendimiento_teorico.R` | Analiza la convergencia del rendimiento observado hacia el rendimiento teórico. |
 | `08_prob_ganancia.R` | Estudia cómo cambia la probabilidad de terminar con ganancias al aumentar los giros. |
@@ -44,28 +43,24 @@ Se estudian sesiones de diferentes duraciones, desde 20 hasta 50.000 giros por p
 
 Se calcula la proporción de personas que termina cada sesión con una ganancia neta positiva.
 
-
 ## Orden de ejecución
 
-Para reproducir los resultados finales del proyecto, se recomienda
-ejecutar desde la carpeta raíz:
+Para reproducir los resultados finales del proyecto, se recomienda ejecutar desde la carpeta raíz:
 
-```r
+``` r
 source("cod/09_ejecutar_proyecto.R")
 ```
 
 Este script ejecuta automáticamente los siguientes archivos:
 
-1. `01_crear_datos_ruletas.R`
-2. `06_comparacion_ruletas.R`
-3. `07_rendimiento_teorico.R`
-4. `08_prob_ganancia.R`
+1.  `01_crear_datos_ruletas.R`
+2.  `06_comparacion_ruletas.R`
+3.  `07_rendimiento_teorico.R`
+4.  `08_prob_ganancia.R`
 
-Los archivos de configuración y las funciones de apuestas son
-cargados automáticamente por los scripts correspondientes.
+Los archivos de configuración y las funciones de apuestas son cargados automáticamente por los scripts correspondientes.
 
-Una vez generados los resultados, se puede renderizar
-`informe_final.qmd` desde RStudio.
+Una vez generados los resultados, se puede renderizar `informe_final.qmd` desde RStudio.
 
 ## 4. Resultados generados
 
