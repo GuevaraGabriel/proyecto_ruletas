@@ -217,11 +217,13 @@ Después de 50.000 giros, el 13,5 % de las personas de la europea y el 1,9 % de 
 
 ## Repositorio del proyecto {.unnumbered}
 
-El código fuente, las bases de datos, los resultados y la
-documentación del proyecto se encuentran disponibles en
-el siguiente repositorio de GitHub:
+El código fuente, las bases de datos, los resultados y la documentación del proyecto se encuentran disponibles en el siguiente repositorio de GitHub:
 
-[Repositorio del proyecto]https://github.com/GuevaraGabriel/proyecto_ruletas
+<https://github.com/GuevaraGabriel/proyecto_ruletas>
+
+## Uso de inteligencia artificial {.unnumbered}
+
+Se utilizó ChatGPT [@openai2026] como herramienta de apoyo para el desarrollo y revisión del código en R.
 
 \newpage
 
