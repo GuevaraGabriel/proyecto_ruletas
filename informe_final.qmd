@@ -54,22 +54,17 @@ csl: info/apa.csl
 editor: visual
 ---
 
-
 # Introducción
 
-El casino es un mundo regido por la matemática y los juegos de azar. Debido a la incertidumbre que caracteriza este ambiente, resulta interesante estudiarlo desde la perspectiva de la probabilidad y la estadística.
-
-En particular, las ruletas europea y americana presentan diferencias en sus reglas que afectan las probabilidades de éxito y el rendimiento esperado de las apuestas. Mediante simulaciones computacionales en R, se busca analizar y comparar el comportamiento de cuatro estrategias de apuestas en ambas ruletas.
+El casino es un mundo regido por la matemática y los juegos de azar. Debido a la incertidumbre que caracteriza este ambiente, resulta interesante estudiarlo desde la perspectiva de la probabilidad y la estadística. La ruleta permite estudiar estas diferencias en un espacio controlado trabajando bajo ciertos supuestos y reglas. Las ruletas europea y americana presentan diferencias en sus reglas que afectan las probabilidades de éxito y el rendimiento esperado. Mediante simulaciones computacionales en R, se busca comparar cuatro estrategias en ambas ruletas.
 
 # Objetivo general
 
-Comparar estadísticamente cuatro estrategias de apuestas en las ruletas europea y americana mediante simulaciones computacionales en R, considerando su rendimiento, variabilidad, convergencia hacia el rendimiento teórico y probabilidad de obtener ganancias conforme aumenta la cantidad de giros.
+Comparar estadísticamente cuatro estrategias de apuestas en las ruletas europea y americana mediante simulaciones en R, considerando su rendimiento, variabilidad, convergencia hacia el rendimiento teórico y probabilidad de obtener ganancias conforme aumenta la cantidad de giros.
 
 # Datos utilizados
 
-Se construyeron dos bases de datos en R a partir de las reglas de las ruletas europea y americana, con 37 y 38 registros, respectivamente. Cada registro representa una casilla y contiene cuatro variables: número, color, docena y columna.
-
-La ruleta europea cuenta con 37 casillas y la americana con 38, debido a la incorporación del doble cero (00) [@boe2011; @nyroulette].
+Se construyeron dos bases de datos en R a partir de las reglas de ambas ruletas, con 37 y 38 datos, respectivamente. Cada dato representa una casilla y contiene cuatro variables: número, color, docena y columna. La ruleta americana incorpora el doble cero (00), que se representa con el número 37 en R [@boe2011; @nyroulette]. Los ceros no pertenecen a ninguna docena ni columna.
 
 A partir de estas bases se generaron los resultados de los giros mediante simulaciones computacionales, sin utilizar registros históricos de casinos reales.
 
@@ -77,69 +72,64 @@ A partir de estas bases se generaron los resultados de los giros mediante simula
 
 ## Estrategias de apuestas
 
-Se seleccionaron cuatro estrategias con diferentes probabilidades de éxito y pagos netos.
+Se seleccionaron cuatro estrategias con diferentes probabilidades de éxito y pagos netos, descritas en la @tbl-estrategias.
 
-| Estrategia | Descripción | Pago neto |
-|---|---|---:|
-| Número | Número 17 | 35:1 |
-| Docena | Primera docena (1-12) | 2:1 |
-| Color | Color negro | 1:1 |
-| Combinada | 60 % al negro y 40 % a la tercera columna | Variable |
+::: {#tbl-estrategias}
+| Estrategia | Descripción                               | Pago neto al acertar |
+|------------------|-----------------------------------|------------------:|
+| Número     | Número 17                                 |                 35:1 |
+| Docena     | Primera docena (1-12)                     |                  2:1 |
+| Color      | Color negro                               |                  1:1 |
+| Combinada  | 60 % al negro y 40 % a la tercera columna |             Variable |
 
-: Estrategias de apuestas simuladas.
+Estrategias de apuestas simuladas. Fuente: elaboración propia.
+:::
+
+\newpage
 
 ## Supuestos de simulación
 
-Se supone que los giros son independientes y las casillas equiprobables. Cada persona mantiene la misma estrategia y monto apostado durante la sesión, sin restricciones de capital ni límites de apuestas. Todos los resultados se expresan en ganancias o pérdidas netas.
+Se supone que los giros son independientes y las casillas equiprobables. Cada persona mantiene su estrategia y monto apostado, sin restricciones de capital ni límites de apuestas. Se utilizan pagos netos estándar, sin reglas especiales de devolución parcial al salir el cero. Dentro de cada ruleta se emplean los mismos resultados aleatorios para comparar las estrategias.
 
 ## Indicadores estadísticos
 
-Sea $N$ la cantidad de personas, $n$ la cantidad de giros, $m$ el monto apostado por giro y $G_i$ la ganancia neta acumulada de la persona $i$, cuya media es $\overline{G}$.
+Sea $N$ la cantidad de personas, $n$ la cantidad de giros por persona, $m$ el monto total apostado por giro y $G_i$ la ganancia neta acumulada de la persona $i$, cuya media es $\overline{G}$.
 
-**Pérdida media y varianza muestral:**
+**Pérdida media y varianza muestral por sesión:**
 
-$$
-\overline{L}=-\frac{1}{N}\sum_{i=1}^{N}G_i
+$$\overline{L}=-\frac{1}{N}\sum_{i=1}^{N}G_i
 \qquad
-s^2=\frac{\sum_{i=1}^{N}(G_i-\overline{G})^2}{N-1}
-$$
+s^2=\frac{\sum_{i=1}^{N}(G_i-\overline{G})^2}{N-1}$$
 
 **Rendimiento porcentual observado y teórico:**
 
-$$
-R=\frac{\overline{G}}{nm}\times100
+$$R=\frac{\overline{G}}{nm}\times100
 \qquad
-R_T=100\sum_{j=1}^{k}p_jx_j
-$$
+R_T=100\sum_{j=1}^{k}p_jx_j$$
 
-Donde $k$ representa las casillas posibles, $p_j$ su probabilidad y $x_j$ su ganancia neta por unidad apostada.
+Donde $k$ representa las casillas posibles, $p_j=1/k$ su probabilidad y $x_j$ su ganancia neta por unidad apostada.
 
 **Probabilidades de ganancia por giro y sesión:**
 
-$$
-P_g=\frac{\text{Casillas favorables}}{\text{Casillas totales}}
+$$P_g=\frac{\text{Casillas favorables}}{k}
 \qquad
-\widehat{P}_s=\frac{\text{Personas con }G_i>0}{N}
-$$
+\widehat{P}_s=\frac{\#\{i:G_i>0\}}{N}$$
 
-La probabilidad empírica de ganancia por giro se estima dividiendo la cantidad de giros con ganancias positivas entre el total de giros simulados.
+La probabilidad empírica por giro, $\widehat{P}_g$, se obtiene dividiendo los giros con ganancia neta positiva entre los $Nn$ giros simulados. Las probabilidades se expresan en porcentajes en los resultados. Los anexos A-D desarrollan los cálculos teóricos de rendimiento, probabilidad por giro, varianza y probabilidad por sesión.
 
 ## Diseño experimental
 
-Se realizaron tres experimentos mediante simulaciones de Monte Carlo en R, utilizando una semilla fija para garantizar la reproducibilidad y un monto de 50 unidades monetarias por giro.
+Se realizaron tres experimentos de Monte Carlo en R con una semilla fija y un monto de 50 unidades monetarias por giro, según la @tbl-diseno. Se utilizaron `sample.int()` y `rmultinom()` para generar los resultados y `set.seed()` para asegurar su reproducibilidad [@rsample; @rmultinom; @rrandom].
 
-| Experimento | Personas | Giros por persona |
-|---|---:|---:|
-| Comparación de estrategias | 1.000 | 100 |
-| Convergencia del rendimiento | Hasta 100.000 | 100 |
-| Probabilidad de ganancia | 1.000 | 20-50.000 |
+::: {#tbl-diseno}
+| Experimento                  |    Personas | Giros por persona |
+|------------------------------|------------:|------------------:|
+| Comparación de estrategias   |       1.000 |               100 |
+| Convergencia del rendimiento | 100-100.000 |               100 |
+| Probabilidad de ganancia     |       1.000 |         20-50.000 |
 
-: Parámetros de los tres experimentos.
-
-Para generar los resultados aleatorios se utilizaron las
-funciones `sample.int()` y `rmultinom()`, empleando
-`set.seed()` para garantizar la reproducibilidad
-[@rsample; @rmultinom; @rrandom].
+Parámetros experimentales por ruleta. Fuente: elaboración propia.
+:::
 
 \newpage
 
@@ -153,22 +143,16 @@ funciones `sample.int()` y `rmultinom()`, empleando
 
 europea <- read.csv("res/06_comparacion_ruletas/tabla_europea.csv")
 americana <- read.csv("res/06_comparacion_ruletas/tabla_americana.csv")
-
 resultados <- rbind(europea, americana)
 
 tabla <- resultados[, c(
-  "ruleta",
-  "estrategia",
-  "varianza_sesion",
-  "perdida_media_sesion",
-  "rendimiento",
-  "probabilidad_giro_estimada",
-  "probabilidad_giro_teorica",
+  "ruleta", "estrategia", "varianza_sesion",
+  "perdida_media_sesion", "rendimiento",
+  "probabilidad_giro_estimada", "probabilidad_giro_teorica",
   "probabilidad_ganancia_sesion"
 )]
 
 tabla$estrategia[tabla$estrategia == "Numero"] <- "Número"
-
 tabla$varianza_sesion <- round(tabla$varianza_sesion, 0)
 tabla[, 4:8] <- round(tabla[, 4:8], 2)
 
@@ -182,53 +166,48 @@ knitr::kable(
 )
 ```
 
-*Nota:* El rendimiento y las probabilidades se expresan
-en porcentajes; la pérdida media, en unidades monetarias
-y la varianza, en unidades monetarias al cuadrado.
+*Nota:* Rendimiento y probabilidades en porcentajes; pérdida media en unidades monetarias (u. m.) y varianza en u. m. al cuadrado.
 
 *Fuente:* Elaboración propia mediante simulaciones en R.
 
-Según la @tbl-comparacion, la ruleta americana presenta mayores pérdidas medias en las cuatro estrategias. La apuesta a un número
-registra la mayor varianza, mientras que la combinada
-presenta la menor. Esta última obtiene la mayor
-probabilidad de ganar por giro, pero la menor
-probabilidad de finalizar una sesión con ganancias.
+Según la @tbl-comparacion, la ruleta americana presenta mayores pérdidas medias en las cuatro estrategias. Teóricamente, para una sesión de 100 giros en la que se apuestan 5.000 u. m. en total, las pérdidas esperadas son 135,14 u. m. en la europea y 263,16 u. m. en la americana (Anexo A). La diferencia se debe a la incorporación del doble cero, que aumenta el número de resultados desfavorables sin modificar los pagos.
+
+La apuesta a un número presenta la mayor varianza en ambas ruletas, mientras que la combinada registra la menor. Por ejemplo, en la europea se obtuvieron varianzas de 9.367.148 y 130.795, respectivamente. Los valores teóricos correspondientes son aproximadamente 8.520.088 y 133.061 (Anexo C), lo que respalda el orden observado de dispersión, aunque las estimaciones no coinciden exactamente.
+
+Una mayor frecuencia de ganar por giro no implica una mayor probabilidad de ganar la sesión. En la europea, la combinada obtiene un 70,50 % de giros favorables, pero únicamente el 33,4 % de las personas termina con ganancias. Esto se explica porque 22 de las 37 casillas generan una ganancia de solo 10 u. m., mientras que un giro totalmente desfavorable implica perder 50 u. m. (Anexo B).
+
+En contraste, la apuesta al número 17 gana en apenas el 2,79 % de los giros simulados en la europea, pero cada acierto produce una ganancia neta de 1.750 u. m. Esto contribuye a que el 53,9 % de las personas termine con ganancias después de 100 giros. Su rendimiento observado de 0,30 % es positivo, pese al rendimiento teórico negativo. Este resultado se obtuvo completamente por situaciones de azar y motiva el siguiente experimento y no demuestra una ventaja matemática de la estrategia.
+
+\newpage
 
 ## Convergencia del rendimiento
 
-![Convergencia del rendimiento observado hacia el teórico. Fuente: elaboración propia.](res/07_rendimiento_teorico/convergencia_reporte.pdf){#fig-convergencia width=85% fig-align="center"}
+![Convergencia del rendimiento observado hacia el teórico. Fuente: elaboración propia.](res/07_rendimiento_teorico/convergencia_reporte.pdf){#fig-convergencia width="100%" fig-align="center"}
 
-La @fig-convergencia muestra cómo el rendimiento de las
-cuatro estrategias se aproxima a su valor teórico:
-−2,70 % en la ruleta europea y −5,26 % en la americana.
-La apuesta a un número presenta mayores fluctuaciones,
-pasando de un rendimiento positivo del 0,30 % con
-1.000 personas a uno negativo del −2,74 % con 100.000.
-Este comportamiento es consistente con la ley de los
-grandes números.
+La @fig-convergencia muestra cómo el rendimiento observado se aproxima al valor teórico de -2,70 % en la ruleta europea y -5,26 % en la americana. El número de giros por persona permanece fijo, por lo que el aumento de la cantidad de personas permite estimar con mayor precisión el rendimiento esperado, sin modificar las reglas del juego.
+
+La apuesta a un número presenta mayores fluctuaciones debido a su elevada varianza. En la europea, su rendimiento pasa de 0,30 % con 1.000 personas a -2,74 % con 100.000. La diferencia indica que aunque tenga un rendimiento positivo al inicio, este termina acercándose al -2,70 % conforme aumenta la cantidad simulada. Al finalizar el experimento, las ocho estimaciones difieren de sus valores teóricos en menos de 0,09 puntos porcentuales.
+
+Este comportamiento es consistente con la ley de los grandes
+números [@blitzstein2019]. Al aumentar la cantidad de personas simuladas, los resultados individuales extremos tienen una menor influencia sobre el rendimiento promedio, permitiendo obtener una estimación más cercana al valor teórico.
+
+Para medir la precisión de esta estimación se utiliza el error estándar del rendimiento:
+
+$$\operatorname{EE}(R)=\frac{100\sqrt{\operatorname{Var}(G)}}{nm\sqrt{N}}.$$Utilizando los valores del Anexo C, el error estándar de la apuesta a un número en la ruleta europea disminuye de 1,85 a 0,18 puntos porcentuales al pasar de 1.000 a 100.000 personas simuladas.
+
+Es importante destacar que aumentar la cantidad de personas no disminuye el riesgo individual de cada jugador, sino la incertidumbre asociada a la estimación del rendimiento promedio.\newpage
 
 ## Probabilidad de ganancia
 
-![Probabilidad de terminar una sesión con ganancia neta positiva. Fuente: elaboración propia.](res/08_prob_ganancia/probabilidad_reporte.pdf){#fig-probabilidad width=85% fig-align="center"}
+![Probabilidad de terminar una sesión con ganancia neta positiva. Fuente: elaboración propia.](res/08_prob_ganancia/probabilidad_reporte.pdf){#fig-probabilidad width="100%" fig-align="center"}
 
-Según la @fig-probabilidad, la probabilidad de finalizar
-con ganancias tiende a disminuir conforme aumentan
-los giros. La apuesta a un número, debido a su elevada
-variabilidad, mantiene probabilidades observadas del
-13,5 % en la ruleta europea y del 1,9 % en la americana
-después de 50.000 giros. Las demás estrategias registran
-un 0 % observado, lo cual no implica que ganar sea
-matemáticamente imposible.
+Según la @fig-probabilidad, la probabilidad de finalizar con ganancias tiende a disminuir conforme aumenta la cantidad de giros. Sin embargo, la reducción no es estrictamente monótona: en la apuesta a un número de la ruleta europea, la proporción observada pasa de 44,4 % con 20 giros a 42,6 % con 50 y a 53,9 % con 100. Parte de este comportamiento se explica por el cambio discreto en la cantidad mínima de aciertos necesaria para obtener ganancias: uno, dos y tres, respectivamente.
 
-# Conclusiones
+Para validar los resultados de 100 giros, se calcularon las probabilidades exactas mediante las distribuciones binomial y multinomial (Anexo D). En la europea, la probabilidad teórica de ganar la sesión apostando a un número es 50,94 %, frente al 53,9 % observado; en la combinada, es 34,47 %, frente al 33,4 % observado. En ambas ruletas, las diferencias absolutas entre las probabilidades simuladas y las exactas son inferiores a tres puntos porcentuales para las cuatro estrategias.
 
-- Las cuatro estrategias presentan diferencias en su variabilidad y probabilidad de éxito. Sin embargo, una mayor probabilidad de ganar por giro no implica necesariamente una mayor probabilidad de finalizar una sesión con ganancias.
+Después de 50.000 giros, el 13,5 % de las personas de la europea y el 1,9 % de la americana termina con ganancias apostando a un número. Para las demás estrategias se observa un 0 %, lo que significa que ninguna de las 1.000 personas simuladas obtuvo ganancias, no que ganar sea matemáticamente imposible. A medida que aumenta el número de giros, la ley de los grandes números implica que la probabilidad de terminar con ganancia neta positiva tiende a cero, pues el valor esperado por giro es negativo.
 
-- El rendimiento observado converge hacia un mismo valor teórico para las cuatro estrategias dentro de cada ruleta: −2,70 % en la europea y −5,26 % en la americana. Por lo tanto, ninguna de las estrategias estudiadas proporciona una ventaja matemática al jugador.
-
-- Conforme aumenta la cantidad de giros, la probabilidad de finalizar una sesión con ganancias tiende a disminuir. Aunque la elevada variabilidad de ciertas estrategias permite obtener ganancias en sesiones prolongadas, su rendimiento esperado continúa siendo negativo.
-
-Estos resultados deben interpretarse considerando los supuestos del modelo, particularmente la independencia de los giros, la equiprobabilidad de las casillas y la ausencia de restricciones de capital. Por ello, las simulaciones representan condiciones idealizadas de juego.
+**Conclusión y limitaciones.** Ninguna de las estrategias estudiadas altera el rendimiento teórico dentro de una misma ruleta. Las diferencias corresponden a la dispersión y a la distribución de las ganancias. El modelo supone independencia, equiprobabilidad y ausencia de restricciones de capital; no representa decisiones de abandono ni límites de apuesta de un casino real.
 
 \newpage
 
@@ -236,3 +215,185 @@ Estos resultados deben interpretarse considerando los supuestos del modelo, part
 
 ::: {#refs}
 :::
+
+\newpage
+
+# Anexos {.unnumbered}
+
+Los desarrollos matemáticos de los siguientes anexos se
+fundamentan en los conceptos de valor esperado, varianza
+y distribuciones de probabilidad desarrollados por
+@blitzstein2019, aplicados a las reglas y condiciones
+establecidas en esta investigación.
+
+## Anexo A. Rendimiento teórico de las estrategias {.unnumbered}
+
+Sea $X$ la ganancia neta por unidad apostada en un giro. Sea $k=37$ para la ruleta europea y $k=38$ para la americana. Las casillas son equiprobables. El rendimiento teórico es $R_T=100E(X)$.
+
+**Número (N):** un resultado favorable con pago neto de 35:1.
+
+$$E(X_N)=35\frac{1}{k}-\frac{k-1}{k}=\frac{36-k}{k}.$$
+
+**Docena (D):** 12 resultados favorables con pago neto de 2:1.
+
+$$E(X_D)=2\frac{12}{k}-\frac{k-12}{k}=\frac{36-k}{k}.$$
+
+**Color (C):** 18 resultados favorables con pago neto de 1:1.
+
+$$E(X_C)=\frac{18}{k}-\frac{k-18}{k}=\frac{36-k}{k}.$$
+
+**Combinada (M):** se apuesta el 60 % al negro y el 40 % a la tercera columna. La columna tiene 12 resultados favorables y paga 2:1, por lo que su esperanza por unidad es igual a la de la docena. Por la linealidad de la esperanza, sin requerir independencia entre ambas apuestas:
+
+$$E(X_M)=0.6E(X_C)+0.4E(X_{\text{col}})
+=\frac{36-k}{k}.$$
+
+Por tanto, las cuatro estrategias presentan los siguientes valores esperados:
+
+$$R_{T,E}=-\frac{100}{37}\approx-2.7027\%
+\qquad
+R_{T,A}=-\frac{200}{38}\approx-5.2632\%.$$
+
+Para una sesión de $n$ giros con monto total $m$ por giro, $G=m\sum_{t=1}^{n}X_t$. La pérdida media teórica es $-E(G)=-nmE(X)$. Con $n=100$ y $m=50$:
+
+::: {#tbl-esperanza}
+| Indicador                     | Europea | Americana |
+|-------------------------------|--------:|----------:|
+| Rendimiento teórico (%)       | -2,7027 |   -5,2632 |
+| Pérdida media teórica (u. m.) |  135,14 |    263,16 |
+
+Valores teóricos comunes a las cuatro estrategias. Fuente: elaboración propia.
+:::
+
+La @tbl-esperanza evidencia que las estrategias no modifican la esperanza de ganancia dentro de una ruleta bajo las reglas del modelo.
+
+\newpage
+
+## Anexo B. Probabilidades teóricas por giro {.unnumbered}
+
+Un giro favorable se define como aquel cuya ganancia neta es estrictamente positiva. Las apuestas individuales tienen una, doce y dieciocho casillas favorables, respectivamente.
+
+En la apuesta combinada, el negro contiene 18 números y la tercera columna contiene 12. Su intersección es $\{6,15,24,33\}$, de modo que existen cuatro casillas donde ambas apuestas ganan, 14 donde solo gana el negro y ocho donde solo gana la columna. En total, 26 casillas generan una ganancia neta positiva.
+
+::: {#tbl-pagos}
+| Resultado     | Casillas | Ganancia por unidad | Ganancia con 50 u. m. |
+|---------------|---------:|--------------------:|----------------------:|
+| Ambas ganan   |        4 |                 1,4 |                    70 |
+| Solo negro    |       14 |                 0,2 |                    10 |
+| Solo columna  |        8 |                 0,2 |                    10 |
+| Ambas pierden |   $k-26$ |                  -1 |                   -50 |
+
+Distribución de pagos de la apuesta combinada. Fuente: elaboración propia.
+:::
+
+Los pagos se obtienen sumando los resultados de las dos partes de la apuesta, como se muestra en la @tbl-pagos. Por ejemplo, si solo gana la columna, la ganancia neta por unidad es $-0.6+2(0.4)=0.2$.
+
+Por inclusión y exclusión, la cantidad de casillas favorables de esta estrategia es $18+12-4=26$. Por consiguiente:
+
+::: {#tbl-giro-teorico}
+| Estrategia | Casillas favorables | Europea (%) | Americana (%) |
+|------------|--------------------:|------------:|--------------:|
+| Número     |                   1 |        2,70 |          2,63 |
+| Docena     |                  12 |       32,43 |         31,58 |
+| Color      |                  18 |       48,65 |         47,37 |
+| Combinada  |                  26 |       70,27 |         68,42 |
+
+Probabilidades teóricas de ganancia por giro. Fuente: elaboración propia.
+:::
+
+Los valores de la @tbl-giro-teorico se obtienen dividiendo la cantidad de casos favorables entre $k$ y multiplicando por 100. Coinciden, salvo redondeo, con las probabilidades teóricas de la @tbl-comparacion. La mayor frecuencia de ganancia por giro de la combinada no modifica su rendimiento esperado.
+
+\newpage
+
+## Anexo C. Varianza teórica por giro y sesión {.unnumbered}
+
+La varianza de la ganancia neta por unidad apostada es:
+
+$$\operatorname{Var}(X)=E(X^2)-[E(X)]^2.$$
+
+Sea $\mu=(36-k)/k$, el valor esperado común obtenido en el Anexo A. Para cada estrategia, el segundo momento se calcula ponderando el cuadrado de los pagos por sus respectivas probabilidades:
+
+$$\begin{aligned}
+E(X_N^2)&=35^2\frac{1}{k}+\frac{k-1}{k}=\frac{k+1224}{k},\\
+E(X_D^2)&=2^2\frac{12}{k}+\frac{k-12}{k}=\frac{k+36}{k},\\
+E(X_C^2)&=\frac{18}{k}+\frac{k-18}{k}=1,\\
+E(X_M^2)&=1.4^2\frac{4}{k}+0.2^2\frac{22}{k}+\frac{k-26}{k}
+=\frac{k-17.28}{k}.
+\end{aligned}$$
+
+En cada caso se resta $\mu^2$ para obtener la varianza por unidad apostada. Como los giros son independientes, la varianza de la ganancia neta acumulada por sesión es:
+
+$$\operatorname{Var}(G)=nm^2\operatorname{Var}(X).$$
+
+Con $n=100$ y $m=50$, se multiplica la varianza de $X$ por 250.000. La @tbl-varianza compara los valores exactos con las estimaciones de Monte Carlo, en u. m. al cuadrado, redondeadas a enteros.
+
+::: {#tbl-varianza}
+| Ruleta    | Estrategia | Varianza teórica | Varianza simulada |
+|-----------|------------|-----------------:|------------------:|
+| Europea   | Número     |        8 520 088 |         9 367 148 |
+| Europea   | Docena     |          493 061 |           454 329 |
+| Europea   | Color      |          249 817 |           244 594 |
+| Europea   | Combinada  |          133 061 |           130 795 |
+| Americana | Número     |        8 301 939 |         8 116 463 |
+| Americana | Docena     |          486 150 |           482 544 |
+| Americana | Color      |          249 307 |           253 045 |
+| Americana | Combinada  |          135 623 |           137 764 |
+
+Comparación de varianzas por sesión. Fuente: elaboración propia, cálculos teóricos y simulaciones en R.
+:::
+
+La varianza teórica confirma que la apuesta a un número presenta la mayor dispersión y la combinada la menor. Las varianzas muestrales presentan diferencias debido a que se estiman a partir de una cantidad finita de sesiones.
+
+\newpage
+
+## Anexo D. Probabilidad teórica de ganancia por sesión {.unnumbered}
+
+### Apuestas individuales {.unnumbered}
+
+Sea $H$ la cantidad de aciertos en una sesión de $n$ giros independientes, con probabilidad de acierto $p$. Entonces:
+
+$$H\sim\operatorname{Binomial}(n,p).$$
+
+Si $r$ representa el pago neto al acertar por unidad apostada, la ganancia acumulada es:
+
+$$G=m\big[rH-(n-H)\big]=m\big[(r+1)H-n\big].$$
+
+La condición de ganancia estrictamente positiva equivale a $H>n/(r+1)$. Por tanto:
+
+$$P(G>0)=1-\sum_{h=0}^{\lfloor n/(r+1)\rfloor}
+\binom{n}{h}p^h(1-p)^{n-h}.$$
+
+Para 100 giros se necesitan al menos tres aciertos al número ($p=1/k$, $r=35$), 34 aciertos a la docena ($p=12/k$, $r=2$) o 51 aciertos al color ($p=18/k$, $r=1$). Los empates no cuentan como ganancias.
+
+### Apuesta combinada {.unnumbered}
+
+Según el Anexo B, sean $A$, $B$ y $C$ las cantidades de giros con ganancia neta por unidad de $1.4$, $0.2$ y $-1$, respectivamente. Entonces:
+
+$$(A,B,C)\sim\operatorname{Multinomial}\left(n;\frac4k,\frac{22}k,\frac{k-26}k\right).$$
+
+La ganancia acumulada satisface $G=m(1.4A+0.2B-C)$. Como $C=n-A-B$, se tiene $G=m(12A+6B-5n)/5$. Así, la probabilidad exacta de ganancia es:
+
+$$P(G>0)=\sum_{\substack{a,b\geq0,\ a+b\leq n\\12a+6b>5n}}
+\frac{n!}{a!b!(n-a-b)!}
+\left(\frac4k\right)^a\left(\frac{22}k\right)^b
+\left(\frac{k-26}k\right)^{n-a-b}.$$
+
+\newpage
+
+### Validación del escenario de 100 giros {.unnumbered}
+
+::: {#tbl-validacion}
+| Ruleta    | Estrategia | Teórica (%) | Observada (%) | Diferencia (pp) |
+|-----------|------------|------------:|--------------:|----------------:|
+| Europea   | Número     |       50,94 |         53,90 |            2,96 |
+| Europea   | Docena     |       40,53 |         41,80 |            1,27 |
+| Europea   | Color      |       35,53 |         35,60 |            0,07 |
+| Europea   | Combinada  |       34,47 |         33,40 |           -1,07 |
+| Americana | Número     |       49,16 |         48,80 |           -0,36 |
+| Americana | Docena     |       33,58 |         31,50 |           -2,08 |
+| Americana | Color      |       26,50 |         25,40 |           -1,10 |
+| Americana | Combinada  |       22,86 |         24,80 |            1,94 |
+
+Probabilidad de finalizar con ganancia neta positiva. Fuente: elaboración propia mediante cálculos exactos y simulaciones en R. Diferencia = observada menos teórica, en puntos porcentuales (pp).
+:::
+
+La @tbl-validacion compara los resultados exactos con los 1.000 participantes simulados por ruleta y estrategia. El error estándar de una proporción estimada es $\sqrt{P(G>0)[1-P(G>0)]/N}$, como proporción. Por ello, para el escenario de 1.000 personas, este error no supera 1,59 puntos porcentuales. Las diferencias observadas son compatibles con el error de Monte Carlo; no representan una demostración de igualdad exacta ni una garantía para sesiones futuras.
