@@ -2,8 +2,8 @@
 # Cambia los parametros aqui y vuelve a ejecutar 06, 07 y 08.
 
 # Escenario base (script 06)
-n_personas <- 1000
-n_giros <- 100
+n.personas <- 1000
+n.giros <- 100
 monto <- 50
 semilla <- 54321
 
@@ -11,11 +11,11 @@ semilla <- 54321
 escala <- 5
 
 # Experimento de convergencia (script 07)
-max_personas <- 100000
+max.personas <- 100000
 
 # Experimento de probabilidad de ganancia (script 08)
-cantidades_giros <- sort(unique(c(
-  20, 50, n_giros, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000
+cantidades.giros <- sort(unique(c(
+  20, 50, n.giros, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000
 )))
 
 # Estrategias y nombres para los graficos

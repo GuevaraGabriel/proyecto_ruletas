@@ -22,12 +22,12 @@ salida <- "res/07_rendimiento_teorico"
 dir.create(salida, recursive = TRUE, showWarnings = FALSE)
 
 # Cantidades de personas que vamos a comparar
-min_personas <- min(100, p$n_personas)
+min.personas <- min(100, p$n.personas)
 
 puntos <- sort(unique(c(
   round(10^seq(
-    log10(min_personas), log10(p$max_personas), length.out = 120
-  )), p$n_personas, p$max_personas
+    log10(min.personas), log10(p$max.personas), length.out = 120
+  )), p$n.personas, p$max.personas
 )))
 
 resultados <- list()
@@ -40,19 +40,19 @@ for (i in seq_along(proyecto$base)) {
   set.seed(p$semilla + 10000 + i)
   
   # Reutilizar las personas del escenario base
-  ganancias <- modelo$ganancias_netas
+  ganancias <- modelo$ganancias.netas
   
   # Cantidad de personas adicionales
-  extra <- p$max_personas - p$n_personas
+  extra <- p$max.personas - p$n.personas
   
   if (extra > 0) {
     # Simular los resultados de las personas adicionales
-    conteos <- t(rmultinom(extra, size = p$n_giros, prob = rep(1, nrow(
-      modelo$pagos_enteros
+    conteos <- t(rmultinom(extra, size = p$n.giros, prob = rep(1, nrow(
+      modelo$pagos.enteros
     ))))
     
     # Calcular las ganancias de las nuevas personas
-    nuevas <- (conteos %*% modelo$pagos_enteros) *
+    nuevas <- (conteos %*% modelo$pagos.enteros) *
       p$monto / p$escala
     
     ganancias <- rbind(ganancias, nuevas)
@@ -62,7 +62,7 @@ for (i in seq_along(proyecto$base)) {
   acumuladas <- apply(ganancias, 2, cumsum)
   
   # Calcular el rendimiento acumulado
-  rendimiento <- sweep(acumuladas[puntos, , drop = FALSE], 1, puntos * p$n_giros * p$monto, "/") * 100
+  rendimiento <- sweep(acumuladas[puntos, , drop = FALSE], 1, puntos * p$n.giros * p$monto, "/") * 100
   
   # Organizar los resultados
   resultados[[tipo]] <- as_tibble(rendimiento) |>
@@ -72,10 +72,10 @@ for (i in seq_along(proyecto$base)) {
                  values_to = "rendimiento") |>
     mutate(
       ruleta = tipo,
-      giros = p$n_giros,
+      giros = p$n.giros,
       monto = p$monto,
       teorico = unname(modelo$teorico[estrategia]),
-      error_puntos_porcentuales = rendimiento - teorico
+      error.puntos.porcentuales = rendimiento - teorico
     )
 }
 
@@ -105,7 +105,7 @@ for (tipo in names(proyecto$base)) {
   
   grafico <- ggplot(d, aes(x = personas, y = rendimiento, color = estrategia)) +
     geom_vline(
-      xintercept = p$n_personas,
+      xintercept = p$n.personas,
       color = "#ADB6C2",
       linetype = "dotted"
     ) +
@@ -125,13 +125,13 @@ for (tipo in names(proyecto$base)) {
     scale_linetype_manual(values = c("Rendimiento teórico" = "dashed"),
                           name = NULL) +
     scale_x_log10(breaks = sort(unique(
-      c(min_personas, 1000, 10000, p$max_personas)
+      c(min.personas, 1000, 10000, p$max.personas)
     )), labels = numero) +
     scale_y_continuous(labels = porcentaje, limits = limites + c(-margen, margen)) +
     labs(
       title = paste0("Ruleta ", tolower(tipo), ": convergencia del rendimiento"),
       subtitle = paste0(
-        p$n_giros,
+        p$n.giros,
         " giros por persona; ",
         numero(p$monto),
         " u. m. por giro. Teórico: ",
@@ -141,7 +141,7 @@ for (tipo in names(proyecto$base)) {
       y = "Ganancia neta / total apostado (%)",
       caption = paste0(
         "Promedio acumulado. Línea vertical: escenario base de ",
-        numero(p$n_personas),
+        numero(p$n.personas),
         " personas.\n",
         "Fuente: elaboración propia mediante simulación."
       )
@@ -175,12 +175,12 @@ for (tipo in names(proyecto$base)) {
 # =============================================================================
 # gráfico de del reporte final
 
-grafico_reporte_07 <- ggplot(
+grafico.reporte.07 <- ggplot(
   datos,
   aes(x = personas, y = rendimiento, color = estrategia)
 ) +
   geom_vline(
-    xintercept = p$n_personas,
+    xintercept = p$n.personas,
     color = "gray60",
     linetype = "dotted",
     linewidth = 0.6
@@ -208,14 +208,14 @@ grafico_reporte_07 <- ggplot(
   labs(
     title = "Convergencia del rendimiento observado hacia el rendimiento teórico",
     subtitle = paste0(
-      p$n_giros, " giros por persona y ",
+      p$n.giros, " giros por persona y ",
       numero(p$monto), " u. m. apostadas por giro"
     ),
     x = "Cantidad de personas simuladas (escala logarítmica)",
     y = "Rendimiento (%)",
     caption = paste0(
       "Línea vertical: escenario base de ",
-      numero(p$n_personas),
+      numero(p$n.personas),
       " personas."
     )
   ) +
@@ -228,11 +228,11 @@ grafico_reporte_07 <- ggplot(
     plot.caption = element_text(hjust = 0)
   )
 
-print(grafico_reporte_07)
+print(grafico.reporte.07)
 
 ggsave(
   file.path(salida, "convergencia_reporte.png"),
-  plot = grafico_reporte_07,
+  plot = grafico.reporte.07,
   width = 10,
   height = 5.8,
   dpi = 300,
@@ -241,7 +241,7 @@ ggsave(
 
 ggsave(
   file.path(salida, "convergencia_reporte.pdf"),
-  plot = grafico_reporte_07,
+  plot = grafico.reporte.07,
   width = 10,
   height = 5.8,
   bg = "white"

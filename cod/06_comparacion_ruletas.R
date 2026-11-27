@@ -11,12 +11,12 @@ source("cod/02_reglas_apuestas.R")
 
 # Verificar los parametros
 stopifnot(
-  n_personas >= 2,
-  n_giros >= 1,
+  n.personas >= 2,
+  n.giros >= 1,
   is.finite(monto),
   monto > 0,
-  max_personas >= n_personas,
-  all(cantidades_giros >= 1)
+  max.personas >= n.personas,
+  all(cantidades.giros >= 1)
 )
 
 # Carpeta de resultados
@@ -51,82 +51,82 @@ for (i in seq_along(ruletas)) {
   
   # Calcular los pagos posibles por unidad apostada
   pagos <- cbind(
-    Numero = apostar_numero(numeros, 1, 17),
-    Docena = apostar_docena(numeros, 1, 1),
-    Color = apostar_color(numeros, 1, "Negro"),
-    Combinada = apostar_combinada(numeros, 1, "Negro")
+    Numero = apostar.numero(numeros, 1, 17),
+    Docena = apostar.docena(numeros, 1, 1),
+    Color = apostar.color(numeros, 1, "Negro"),
+    Combinada = apostar.combinada(numeros, 1, "Negro")
   )
   
   # Convertir pagos a enteros para evitar errores decimales
-  pagos_enteros <- round(pagos * escala)
+  pagos.enteros <- round(pagos * escala)
   
-  stopifnot(max(abs(pagos * escala - pagos_enteros)) < 1e-8)
+  stopifnot(max(abs(pagos * escala - pagos.enteros)) < 1e-8)
   
   # Simular los giros de todas las personas
-  indices <- matrix(sample.int(length(numeros), n_personas * n_giros, replace = TRUE),
-                    nrow = n_personas)
+  indices <- matrix(sample.int(length(numeros), n.personas * n.giros, replace = TRUE),
+                    nrow = n.personas)
   
   # Preparar las matrices de resultados
-  ganancias_unidad <- matrix(
+  ganancias.unidad <- matrix(
     0,
-    nrow = n_personas,
+    nrow = n.personas,
     ncol = length(estrategias),
     dimnames = list(NULL, estrategias)
   )
   
-  probabilidad_giro <- numeric(length(estrategias))
+  probabilidad.giro <- numeric(length(estrategias))
   
   # Calcular las ganancias de cada estrategia
   for (j in seq_along(estrategias)) {
-    pagos_giros <- matrix(pagos_enteros[as.vector(indices), j], nrow = n_personas)
+    pagos.giros <- matrix(pagos.enteros[as.vector(indices), j], nrow = n.personas)
     
-    ganancias_unidad[, j] <- rowSums(pagos_giros)
+    ganancias.unidad[, j] <- rowSums(pagos.giros)
     
-    probabilidad_giro[j] <- mean(pagos_giros > 0) * 100
+    probabilidad.giro[j] <- mean(pagos.giros > 0) * 100
   }
   
   # Convertir ganancias al monto real apostado
-  ganancias_netas <- ganancias_unidad * monto / escala
+  ganancias.netas <- ganancias.unidad * monto / escala
   
   # Rendimiento teorico de cada estrategia
-  teorico <- colMeans(pagos_enteros) / escala * 100
+  teorico <- colMeans(pagos.enteros) / escala * 100
   
   # Resumen de resultados
   resumen <- tibble(
     ruleta = tipo,
     estrategia = estrategias,
-    personas = n_personas,
-    giros = n_giros,
+    personas = n.personas,
+    giros = n.giros,
     monto = monto,
     
-    varianza_sesion = apply(ganancias_netas, 2, var),
+    varianza.sesion = apply(ganancias.netas, 2, var),
     
-    perdida_media_sesion = -colMeans(ganancias_netas),
+    perdida.media.sesion = -colMeans(ganancias.netas),
     
-    rendimiento = colMeans(ganancias_netas) /
-      (n_giros * monto) * 100,
+    rendimiento = colMeans(ganancias.netas) /
+      (n.giros * monto) * 100,
     
-    probabilidad_giro_estimada = probabilidad_giro,
+    probabilidad.giro.estimada = probabilidad.giro,
     
-    probabilidad_giro_teorica = colMeans(pagos > 0) * 100,
+    probabilidad.giro.teorica = colMeans(pagos > 0) * 100,
     
-    casos_favorables = colSums(pagos > 0),
+    casos.favorables = colSums(pagos > 0),
     casillas = length(numeros),
     
-    ganadores_sesion = colSums(ganancias_unidad > 0),
+    ganadores.sesion = colSums(ganancias.unidad > 0),
     
-    probabilidad_ganancia_sesion =
-      colMeans(ganancias_unidad > 0) * 100,
+    probabilidad.ganancia.sesion =
+      colMeans(ganancias.unidad > 0) * 100,
     
-    rendimiento_teorico = unname(teorico)
+    rendimiento.teorico = unname(teorico)
   )
   
   # Guardar los datos necesarios para los scripts 07 y 08
   base[[tipo]] <- list(
     indices = indices,
-    pagos_enteros = pagos_enteros,
-    ganancias_unidad = ganancias_unidad,
-    ganancias_netas = ganancias_netas,
+    pagos.enteros = pagos.enteros,
+    ganancias.unidad = ganancias.unidad,
+    ganancias.netas = ganancias.netas,
     teorico = teorico
   )
   
@@ -136,15 +136,15 @@ for (i in seq_along(ruletas)) {
   # Preparar la tabla visual
   mostrar <- data.frame(
     etiquetas,
-    formato(resumen$varianza_sesion, 0),
-    formato(resumen$perdida_media_sesion),
-    paste0(formato(resumen$probabilidad_giro_estimada), " %"),
+    formato(resumen$varianza.sesion, 0),
+    formato(resumen$perdida.media.sesion),
+    paste0(formato(resumen$probabilidad.giro.estimada), " %"),
     paste0(
-      resumen$casos_favorables,
+      resumen$casos.favorables,
       "/",
       resumen$casillas,
       " = ",
-      formato(resumen$probabilidad_giro_teorica),
+      formato(resumen$probabilidad.giro.teorica),
       " %"
     )
   )
@@ -182,9 +182,9 @@ for (i in seq_along(ruletas)) {
   # Nota explicativa
   nota <- grid::textGrob(
     paste0(
-      formato(n_personas, 0),
+      formato(n.personas, 0),
       " personas; ",
-      n_giros,
+      n.giros,
       " giros; ",
       formato(monto),
       " u. m. por giro.\n",
@@ -226,11 +226,11 @@ for (i in seq_along(ruletas)) {
 
 # Resultados individuales del escenario base
 sesiones <- bind_rows(lapply(names(base), function(tipo) {
-  as_tibble(base[[tipo]]$ganancias_netas) |>
+  as_tibble(base[[tipo]]$ganancias.netas) |>
     mutate(persona = row_number(), ruleta = tipo) |>
     pivot_longer(all_of(estrategias),
                  names_to = "estrategia",
-                 values_to = "ganancia_neta")
+                 values_to = "ganancia.neta")
 }))
 
 write.csv(sesiones, file.path(salida, "sesiones_base.csv"), row.names = FALSE)
@@ -239,13 +239,13 @@ write.csv(sesiones, file.path(salida, "sesiones_base.csv"), row.names = FALSE)
 saveRDS(
   list(
     parametros = list(
-      n_personas = n_personas,
-      n_giros = n_giros,
+      n.personas = n.personas,
+      n.giros = n.giros,
       monto = monto,
       semilla = semilla,
       escala = escala,
-      max_personas = max_personas,
-      cantidades_giros = cantidades_giros
+      max.personas = max.personas,
+      cantidades.giros = cantidades.giros
     ),
     estrategias = estrategias,
     etiquetas = etiquetas,
