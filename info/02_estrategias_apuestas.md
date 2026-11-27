@@ -38,7 +38,7 @@ En este proyecto se seleccionó el número 17.
 
 Esta estrategia presenta ganancias poco frecuentes, pero de gran magnitud, por lo que puede producir una elevada variabilidad en los resultados acumulados.
 
-**Función de R:** `apostar_numero()`
+**Función de R:** `apostar.numero()`
 
 ## 3. Estrategia 2: apuesta a una docena
 
@@ -63,7 +63,7 @@ En este proyecto se seleccionó la primera docena, que comprende los números de
 - Si sale el 8: ganancia neta de +100.
 - Si sale el 17: pérdida de −50.
 
-**Función de R:** `apostar_docena()`
+**Función de R:** `apostar.docena()`
 
 ## 4. Estrategia 3: apuesta a un color
 
@@ -90,7 +90,7 @@ Ambas ruletas tienen 18 casillas negras y 18 rojas.
 - Si sale el 17 (negro): ganancia neta de +50.
 - Si sale el 18 (rojo): pérdida de −50.
 
-**Función de R:** `apostar_color()`
+**Función de R:** `apostar.color()`
 
 ## 5. Estrategia 4: apuesta combinada
 
@@ -143,7 +143,7 @@ Aunque esta estrategia tiene una probabilidad relativamente alta de obtener gana
 
 Las ganancias pequeñas pueden ser compensadas por pérdidas de mayor magnitud.
 
-**Función de R:** `apostar_combinada()`
+**Función de R:** `apostar.combinada()`
 
 ## 6. Comparación general de las estrategias
 

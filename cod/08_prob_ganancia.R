@@ -15,7 +15,7 @@ proyecto <- readRDS(archivo)
 
 p <- proyecto$parametros
 estrategias <- proyecto$estrategias
-cantidades_giros <- p$cantidades_giros
+cantidades.giros <- p$cantidades.giros
 
 # Crear la carpeta de resultados
 salida <- "res/08_prob_ganancia"
@@ -32,17 +32,17 @@ for (i in seq_along(proyecto$base)) {
   set.seed(p$semilla + 20000 + i)
   
   # Comenzar con las ganancias del escenario base
-  acumuladas <- modelo$ganancias_unidad
-  ultimo_giro <- p$n_giros
+  acumuladas <- modelo$ganancias.unidad
+  ultimo.giro <- p$n.giros
   
   # Evaluar las diferentes cantidades de giros
-  for (n in cantidades_giros) {
-    if (n <= p$n_giros) {
+  for (n in cantidades.giros) {
+    if (n <= p$n.giros) {
       # Recuperar los primeros n giros del escenario base
       indices <- as.vector(modelo$indices[, seq_len(n), drop = FALSE])
       
       unidades <- sapply(seq_along(estrategias), function(j) {
-        rowSums(matrix(modelo$pagos_enteros[indices, j], nrow = p$n_personas))
+        rowSums(matrix(modelo$pagos.enteros[indices, j], nrow = p$n.personas))
       })
       
       colnames(unidades) <- estrategias
@@ -50,17 +50,17 @@ for (i in seq_along(proyecto$base)) {
     } else {
       # Simular solamente los giros adicionales
       conteos <- t(rmultinom(
-        p$n_personas,
-        size = n - ultimo_giro,
-        prob = rep(1, nrow(modelo$pagos_enteros))
+        p$n.personas,
+        size = n - ultimo.giro,
+        prob = rep(1, nrow(modelo$pagos.enteros))
       ))
       
       # Sumar las nuevas ganancias
       acumuladas <- acumuladas +
-        conteos %*% modelo$pagos_enteros
+        conteos %*% modelo$pagos.enteros
       
       unidades <- acumuladas
-      ultimo_giro <- n
+      ultimo.giro <- n
     }
     
     # Convertir las ganancias al monto real
@@ -75,7 +75,7 @@ for (i in seq_along(proyecto$base)) {
     resultados[[clave]] <- tibble(
       ruleta = tipo,
       estrategia = estrategias,
-      personas = p$n_personas,
+      personas = p$n.personas,
       giros = n,
       monto = p$monto,
       
@@ -83,10 +83,10 @@ for (i in seq_along(proyecto$base)) {
       perdedores = colSums(unidades < 0),
       empates = colSums(unidades == 0),
       
-      probabilidad_ganancia =
-        ganadores / p$n_personas * 100,
+      probabilidad.ganancia =
+        ganadores / p$n.personas * 100,
       
-      perdida_media = -colMeans(ganancias),
+      perdida.media = -colMeans(ganancias),
       
       rendimiento = colMeans(ganancias) /
         (n * p$monto) * 100
@@ -98,8 +98,8 @@ for (i in seq_along(proyecto$base)) {
         ruleta = tipo,
         estrategia = estrategias[j],
         giros = n,
-        persona = seq_len(p$n_personas),
-        ganancia_neta = ganancias[, j]
+        persona = seq_len(p$n.personas),
+        ganancia.neta = ganancias[, j]
       )
     }))
   }
@@ -124,17 +124,17 @@ numero <- scales::label_number(big.mark = ".", decimal.mark = ",")
 porcentaje <- scales::label_number(suffix = " %", decimal.mark = ",")
 
 # Mantener la misma escala vertical en ambas ruletas
-limite_y <- min(100, max(60, ceiling(max(
-  datos$probabilidad_ganancia
+limite.y <- min(100, max(60, ceiling(max(
+  datos$probabilidad.ganancia
 ) / 10) * 10))
 
 # Crear un grafico para cada ruleta
 for (tipo in names(proyecto$base)) {
   d <- filter(datos, ruleta == tipo)
   
-  grafico <- ggplot(d, aes(x = giros, y = probabilidad_ganancia, color = estrategia)) +
+  grafico <- ggplot(d, aes(x = giros, y = probabilidad.ganancia, color = estrategia)) +
     geom_vline(
-      xintercept = p$n_giros,
+      xintercept = p$n.giros,
       color = "#ADB6C2",
       linetype = "dotted"
     ) +
@@ -148,17 +148,17 @@ for (tipo in names(proyecto$base)) {
     ) +
     scale_x_log10(breaks = sort(unique(
       c(
-        min(cantidades_giros),
-        p$n_giros,
+        min(cantidades.giros),
+        p$n.giros,
         500,
         2000,
         10000,
-        max(cantidades_giros)
+        max(cantidades.giros)
       )
     )), labels = numero) +
     scale_y_continuous(
-      limits = c(0, limite_y),
-      breaks = seq(0, limite_y, 10),
+      limits = c(0, limite.y),
+      breaks = seq(0, limite.y, 10),
       labels = porcentaje
     ) +
     labs(
@@ -168,7 +168,7 @@ for (tipo in names(proyecto$base)) {
         ": probabilidad de terminar con ganancia"
       ),
       subtitle = paste0(
-        numero(p$n_personas),
+        numero(p$n.personas),
         " personas por estrategia; ",
         numero(p$monto),
         " u. m. por giro; ganancia final mayor que cero."
@@ -210,12 +210,12 @@ for (tipo in names(proyecto$base)) {
 # =============================================================================
 # gráfico de del reporte final
 
-grafico_reporte_08 <- ggplot(
+grafico.reporte.08 <- ggplot(
   datos,
-  aes(x = giros, y = probabilidad_ganancia, color = estrategia)
+  aes(x = giros, y = probabilidad.ganancia, color = estrategia)
 ) +
   geom_vline(
-    xintercept = p$n_giros,
+    xintercept = p$n.giros,
     color = "gray60",
     linetype = "dotted",
     linewidth = 0.6
@@ -231,14 +231,14 @@ grafico_reporte_08 <- ggplot(
   ) +
   scale_x_log10(labels = numero) +
   scale_y_continuous(
-    limits = c(0, limite_y),
-    breaks = seq(0, limite_y, 10),
+    limits = c(0, limite.y),
+    breaks = seq(0, limite.y, 10),
     labels = porcentaje
   ) +
   labs(
     title = "Probabilidad de terminar una sesión con ganancia neta positiva",
     subtitle = paste0(
-      numero(p$n_personas),
+      numero(p$n.personas),
       " personas por estrategia; ",
       numero(p$monto),
       " u. m. por giro"
@@ -256,11 +256,11 @@ grafico_reporte_08 <- ggplot(
     plot.caption = element_text(hjust = 0)
   )
 
-print(grafico_reporte_08)
+print(grafico.reporte.08)
 
 ggsave(
   file.path(salida, "probabilidad_reporte.png"),
-  plot = grafico_reporte_08,
+  plot = grafico.reporte.08,
   width = 10,
   height = 5.8,
   dpi = 300,
@@ -269,7 +269,7 @@ ggsave(
 
 ggsave(
   file.path(salida, "probabilidad_reporte.pdf"),
-  plot = grafico_reporte_08,
+  plot = grafico.reporte.08,
   width = 10,
   height = 5.8,
   bg = "white"

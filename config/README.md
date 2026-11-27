@@ -14,12 +14,12 @@ Este script contiene los parámetros utilizados por los tres experimentos princi
 
 | Parámetro | Valor | Descripción |
 |----------------------|----------------------------:|----------------------|
-| `n_personas` | 1.000 | Cantidad de personas simuladas en el escenario base. |
-| `n_giros` | 100 | Cantidad de giros por persona en el escenario base. |
+| `n.personas` | 1.000 | Cantidad de personas simuladas en el escenario base. |
+| `n.giros` | 100 | Cantidad de giros por persona en el escenario base. |
 | `monto` | 50 | Unidades monetarias apostadas por giro. |
 | `semilla` | 54321 | Semilla para reproducir las simulaciones. |
 | `escala` | 5 | Factor para representar los pagos mediante números enteros. |
-| `max_personas` | 100.000 | Máximo de personas en el análisis de convergencia. |
+| `max.personas` | 100.000 | Máximo de personas en el análisis de convergencia. |
 
 ## 3. Cantidades de giros
 
@@ -27,7 +27,7 @@ Para el análisis de probabilidad de terminar con ganancias se utilizan las sigu
 
 20, 50, 100, 200, 500, 1.000, 2.000, 5.000, 10.000, 20.000 y 50.000.
 
-Estos valores se definen mediante el vector `cantidades_giros`.
+Estos valores se definen mediante el vector `cantidades.giros`.
 
 ## 4. Estrategias
 

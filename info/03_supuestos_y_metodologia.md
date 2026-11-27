@@ -47,12 +47,12 @@ Los parámetros principales se establecen en `cod/00_configuracion.R`.
 
 | Parámetro | Valor | Descripción |
 |---|---:|---|
-| `n_personas` | 1.000 | Sesiones simuladas por estrategia y tipo de ruleta en el escenario base |
-| `n_giros` | 100 | Giros por sesión en el escenario base |
+| `n.personas` | 1.000 | Sesiones simuladas por estrategia y tipo de ruleta en el escenario base |
+| `n.giros` | 100 | Giros por sesión en el escenario base |
 | `monto` | 50 | Unidades monetarias apostadas por giro |
 | `semilla` | 54321 | Semilla base del generador pseudoaleatorio |
 | `escala` | 5 | Factor utilizado para representar pagos como enteros |
-| `max_personas` | 100.000 | Número máximo de personas en el experimento de convergencia |
+| `max.personas` | 100.000 | Número máximo de personas en el experimento de convergencia |
 
 En el tercer experimento se estudian sesiones de 20, 50, 100, 200, 500, 1.000, 2.000, 5.000, 10.000, 20.000 y 50.000 giros.
 
