@@ -1,4 +1,4 @@
-"ruleta","estrategia","personas","giros","monto","ganadores","perdedores","empates","probabilidad_ganancia","perdida_media","rendimiento"
+"ruleta","estrategia","personas","giros","monto","ganadores","perdedores","empates","probabilidad.ganancia","perdida.media","rendimiento"
 "Americana","Numero",1000,20,50,404,596,0,40.4,76.6,-7.66
 "Americana","Docena",1000,20,50,459,541,0,45.9,54.25,-5.425
 "Americana","Color",1000,20,50,318,518,164,31.8,58.6,-5.86

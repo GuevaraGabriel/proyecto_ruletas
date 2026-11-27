@@ -76,7 +76,7 @@ Se seleccionaron cuatro estrategias con diferentes probabilidades de éxito y pa
 
 ::: {#tbl-estrategias}
 | Estrategia | Descripción                               | Pago neto al acertar |
-|----------------|-------------------------------------|------------------:|
+|------------|-------------------------------------------|---------------------:|
 | Número     | Número 17                                 |                 35:1 |
 | Docena     | Primera docena (1-12)                     |                  2:1 |
 | Color      | Color negro                               |                  1:1 |
@@ -146,14 +146,14 @@ americana <- read.csv("res/06_comparacion_ruletas/tabla_americana.csv")
 resultados <- rbind(europea, americana)
 
 tabla <- resultados[, c(
-  "ruleta", "estrategia", "varianza_sesion",
-  "perdida_media_sesion", "rendimiento",
-  "probabilidad_giro_estimada", "probabilidad_giro_teorica",
-  "probabilidad_ganancia_sesion"
+  "ruleta", "estrategia", "varianza.sesion",
+  "perdida.media.sesion", "rendimiento",
+  "probabilidad.giro.estimada", "probabilidad.giro.teorica",
+  "probabilidad.ganancia.sesion"
 )]
 
 tabla$estrategia[tabla$estrategia == "Numero"] <- "Número"
-tabla$varianza_sesion <- round(tabla$varianza_sesion, 0)
+tabla$varianza.sesion <- round(tabla$varianza.sesion, 0)
 tabla[, 4:8] <- round(tabla[, 4:8], 2)
 
 knitr::kable(
@@ -220,10 +220,6 @@ Después de 50.000 giros, el 13,5 % de las personas de la europea y el 1,9 % de 
 El código fuente, las bases de datos, los resultados y la documentación del proyecto se encuentran disponibles en el siguiente repositorio de GitHub:
 
 <https://github.com/GuevaraGabriel/proyecto_ruletas>
-
-## Uso de inteligencia artificial {.unnumbered}
-
-Se utilizó ChatGPT [@openai2026] como herramienta de apoyo para el desarrollo y revisión del código en R.
 
 \newpage
 
@@ -402,3 +398,7 @@ Probabilidad de finalizar con ganancia neta positiva. Fuente: elaboración propi
 :::
 
 La @tbl-validacion compara los resultados exactos con los 1.000 participantes simulados por ruleta y estrategia. El error estándar de una proporción estimada es $\sqrt{P(G>0)[1-P(G>0)]/N}$, como proporción. Por ello, para el escenario de 1.000 personas, este error no supera 1,59 puntos porcentuales. Las diferencias observadas son compatibles con el error de Monte Carlo; no representan una demostración de igualdad exacta ni una garantía para sesiones futuras.
+
+## Uso de inteligencia artificial {.unnumbered}
+
+Se utilizó ChatGPT como herramienta de apoyo para el desarrollo y revisión del código en R, validado por Gabriel Guevara Cornejo.
